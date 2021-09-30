@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
 from fastapi import UploadFile, File, Form
 from google.api_core import retry
+from routers import notes
 
 app = FastAPI()
 
