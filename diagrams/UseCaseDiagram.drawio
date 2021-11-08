@@ -1,1 +1,103 @@
-<mxfile host="app.diagrams.net" modified="2021-11-07T22:01:59.228Z" agent="5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.81 Safari/537.36" version="15.7.0" etag="RyvNFgOOvlnsSNEqwlol" type="github"><diagram id="GyV8Dv_5TEbV5hCh9E7B">UzV2zq1wL0osyPDNT0nNUTV2VTV2LsrPL4GwciucU3NyVI0MMlNUjV1UjYwMgFjVyA2HrCFY1qAgsSg1rwSLBiADYTaQg2Y1AA==</diagram></mxfile>
+<mxfile host="app.diagrams.net" modified="2021-11-08T00:07:31.617Z" agent="5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.81 Safari/537.36" etag="1Vuxqeh5GT3nNNQKaHYg" version="15.7.0" type="github">
+  <diagram id="GyV8Dv_5TEbV5hCh9E7B" name="Page-1">
+    <mxGraphModel dx="1303" dy="1747" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="pDt1ECI_ONfhFfwZZIW9-40" value="APP" style="shape=umlFrame;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="100" y="150" width="380" height="750" as="geometry" />
+        </mxCell>
+        <mxCell id="pDt1ECI_ONfhFfwZZIW9-2" value="API" style="shape=umlFrame;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="500" y="150" width="380" height="750" as="geometry" />
+        </mxCell>
+        <mxCell id="pDt1ECI_ONfhFfwZZIW9-3" value="GCP" style="shape=umlFrame;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="900" y="150" width="380" height="750" as="geometry" />
+        </mxCell>
+        <mxCell id="pDt1ECI_ONfhFfwZZIW9-5" value="Login" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="30" y="1230" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="pDt1ECI_ONfhFfwZZIW9-6" value="Create a note" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="120" y="190" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="pDt1ECI_ONfhFfwZZIW9-36" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=open;endFill=0;" edge="1" parent="1" source="pDt1ECI_ONfhFfwZZIW9-7" target="pDt1ECI_ONfhFfwZZIW9-35">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="pDt1ECI_ONfhFfwZZIW9-7" value="Delete a note" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="120" y="460" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="pDt1ECI_ONfhFfwZZIW9-43" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=open;endFill=0;" edge="1" parent="1" source="pDt1ECI_ONfhFfwZZIW9-8" target="pDt1ECI_ONfhFfwZZIW9-42">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="pDt1ECI_ONfhFfwZZIW9-8" value="Label a note" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="120" y="630" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="pDt1ECI_ONfhFfwZZIW9-9" value="Star a note" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="50" y="1005" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="pDt1ECI_ONfhFfwZZIW9-11" value="See all notes" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="50" y="1080" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="pDt1ECI_ONfhFfwZZIW9-24" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=open;endFill=0;" edge="1" parent="1" source="pDt1ECI_ONfhFfwZZIW9-13" target="pDt1ECI_ONfhFfwZZIW9-23">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="pDt1ECI_ONfhFfwZZIW9-13" value="Send Recording to&amp;nbsp;&lt;span&gt;SpeechClient()&lt;br&gt;&lt;/span&gt;" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="980" y="220" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="pDt1ECI_ONfhFfwZZIW9-17" value="&amp;lt;&amp;lt;includes&amp;gt;&amp;gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;endArrow=open;endFill=0;" edge="1" parent="1" source="pDt1ECI_ONfhFfwZZIW9-15" target="pDt1ECI_ONfhFfwZZIW9-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="pDt1ECI_ONfhFfwZZIW9-20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=open;endFill=0;" edge="1" parent="1" source="pDt1ECI_ONfhFfwZZIW9-15" target="pDt1ECI_ONfhFfwZZIW9-19">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="pDt1ECI_ONfhFfwZZIW9-15" value="Record Audio" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="320" y="190" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="pDt1ECI_ONfhFfwZZIW9-21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=open;endFill=0;" edge="1" parent="1" source="pDt1ECI_ONfhFfwZZIW9-19" target="pDt1ECI_ONfhFfwZZIW9-13">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="pDt1ECI_ONfhFfwZZIW9-19" value="Send audio to Cloud Storage" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="610" y="190" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="pDt1ECI_ONfhFfwZZIW9-27" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=open;endFill=0;" edge="1" parent="1" source="pDt1ECI_ONfhFfwZZIW9-23" target="pDt1ECI_ONfhFfwZZIW9-26">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="pDt1ECI_ONfhFfwZZIW9-23" value="&lt;span&gt;Create to entry in DB w/ text&lt;br&gt;&lt;/span&gt;" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="610" y="270" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="pDt1ECI_ONfhFfwZZIW9-28" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=open;endFill=0;" edge="1" parent="1" source="pDt1ECI_ONfhFfwZZIW9-26" target="pDt1ECI_ONfhFfwZZIW9-23">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="pDt1ECI_ONfhFfwZZIW9-30" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=open;endFill=0;" edge="1" parent="1" source="pDt1ECI_ONfhFfwZZIW9-26" target="pDt1ECI_ONfhFfwZZIW9-29">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="pDt1ECI_ONfhFfwZZIW9-26" value="&lt;span&gt;Classify text&lt;br&gt;&lt;/span&gt;" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="980" y="310" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="pDt1ECI_ONfhFfwZZIW9-33" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=open;endFill=0;" edge="1" parent="1" source="pDt1ECI_ONfhFfwZZIW9-29" target="pDt1ECI_ONfhFfwZZIW9-32">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="pDt1ECI_ONfhFfwZZIW9-29" value="&lt;span&gt;Update Note with classification&lt;br&gt;&lt;/span&gt;" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="610" y="350" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="pDt1ECI_ONfhFfwZZIW9-31" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;endArrow=open;endFill=0;" edge="1" parent="1" source="pDt1ECI_ONfhFfwZZIW9-29" target="pDt1ECI_ONfhFfwZZIW9-29">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="pDt1ECI_ONfhFfwZZIW9-32" value="&lt;span&gt;Return Note object&lt;br&gt;&lt;/span&gt;" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="290" y="350" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="pDt1ECI_ONfhFfwZZIW9-39" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=open;endFill=0;" edge="1" parent="1" source="pDt1ECI_ONfhFfwZZIW9-35" target="pDt1ECI_ONfhFfwZZIW9-38">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="pDt1ECI_ONfhFfwZZIW9-35" value="Delete note by id in DB" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="610" y="460" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="pDt1ECI_ONfhFfwZZIW9-38" value="Remove audio from cloud storage" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="610" y="540" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="pDt1ECI_ONfhFfwZZIW9-42" value="Update Classification in DB" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="610" y="630" width="140" height="70" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
