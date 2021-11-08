@@ -1,4 +1,5 @@
 fastapi
 uvicorn
+python-multipart
 google-cloud-speech
-speech_recognition
+# speech_recognition
