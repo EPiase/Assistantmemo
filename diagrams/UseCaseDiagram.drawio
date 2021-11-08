@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2021-11-08T00:07:31.617Z" agent="5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.81 Safari/537.36" etag="1Vuxqeh5GT3nNNQKaHYg" version="15.7.0" type="github">
+<mxfile host="app.diagrams.net" modified="2021-11-08T00:41:52.300Z" agent="5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.81 Safari/537.36" etag="F3mWLg7w76q8Z97-9xCC" version="15.7.0" type="github">
   <diagram id="GyV8Dv_5TEbV5hCh9E7B" name="Page-1">
     <mxGraphModel dx="1303" dy="1747" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -34,8 +34,11 @@
         <mxCell id="pDt1ECI_ONfhFfwZZIW9-9" value="Star a note" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="50" y="1005" width="140" height="70" as="geometry" />
         </mxCell>
-        <mxCell id="pDt1ECI_ONfhFfwZZIW9-11" value="See all notes" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="50" y="1080" width="140" height="70" as="geometry" />
+        <mxCell id="pDt1ECI_ONfhFfwZZIW9-45" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=open;endFill=0;" edge="1" parent="1" source="pDt1ECI_ONfhFfwZZIW9-11" target="pDt1ECI_ONfhFfwZZIW9-44">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="pDt1ECI_ONfhFfwZZIW9-11" value="List all notes" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="120" y="720" width="140" height="70" as="geometry" />
         </mxCell>
         <mxCell id="pDt1ECI_ONfhFfwZZIW9-24" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=open;endFill=0;" edge="1" parent="1" source="pDt1ECI_ONfhFfwZZIW9-13" target="pDt1ECI_ONfhFfwZZIW9-23">
           <mxGeometry relative="1" as="geometry" />
@@ -96,6 +99,9 @@
         </mxCell>
         <mxCell id="pDt1ECI_ONfhFfwZZIW9-42" value="Update Classification in DB" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="610" y="630" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="pDt1ECI_ONfhFfwZZIW9-44" value="Query DB for all notes by User ID" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="610" y="720" width="140" height="70" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
