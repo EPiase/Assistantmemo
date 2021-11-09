@@ -7,6 +7,4 @@ COPY requirements.txt /app/requirements.txt
 RUN pip3 install -U pip setuptools wheel
 RUN pip3 install gunicorn uvloop httptools
 RUN pip3 install -r /app/requirements.txt
-CMD gunicorn --bind :$PORT --workers 1 \
-    --worker-class uvicorn.workers.UvicornWorker  \
-    --threads 8 main:app
+CMD gunicorn main:app -c gunicorn_config.py
