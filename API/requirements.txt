@@ -2,4 +2,9 @@ fastapi
 uvicorn
 python-multipart
 google-cloud-speech
+gunicorn 
+uvloop
+httptools
+setuptools 
+wheel
 # speech_recognition
