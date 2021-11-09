@@ -17,7 +17,7 @@ ENV ACCESS_LOG=${ACCESS_LOG:-/proc/1/fd/1}
 ENV ERROR_LOG=${ERROR_LOG:-/proc/1/fd/2}
 
 ENTRYPOINT /usr/local/bin/gunicorn \
-  -b 0.0.0.0:"$PORT" \
+  -b 0.0.0.0:80 \
   -w 4 \
   -k uvicorn.workers.UvicornWorker main:app \
   --chdir /app \
