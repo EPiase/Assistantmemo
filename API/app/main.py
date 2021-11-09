@@ -9,7 +9,7 @@ app = FastAPI()
 
 @app.get("/") #, response_class=HTMLResponse)
 async def root():
-    var = {"message": "Hello API two"}
+    var = {"message": "Hello API three"}
     # res = open("landing_page.html")
 
     # return res.read()
