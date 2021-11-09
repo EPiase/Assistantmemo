@@ -7,12 +7,13 @@ from routers import notes
 app = FastAPI()
 
 
-@app.get("/", response_class=HTMLResponse)
+@app.get("/") #, response_class=HTMLResponse)
 async def root():
     var = {"message": "Hello API"}
-    res = open("landing_page.html")
+    # res = open("landing_page.html")
 
-    return res.read()
+    # return res.read()
+    return var
 
 @app.post("/file/")
 async def transcribe_file(speech_file: UploadFile = File(...)):
