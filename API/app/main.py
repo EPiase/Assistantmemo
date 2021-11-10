@@ -18,11 +18,15 @@ async def root():
 @app.post("/uploadfile/")
 async def create_upload_file(file: UploadFile = File(...)):
     from google.cloud import storage
+    # from random import randint
+    # file_name = randint(10^8,10^10)
     storage_client = storage.Client()
     bucket = storage_client.bucket("assistantmemo-recordings")
     blob = bucket.blob(file.filename)
 
-    blob.upload_from_filename(content=await file.read())
+    # f = open(f"{file_name}", "a")
+    # f.write()
+    blob.upload_from_filename(await file.read())
 
     # print(
     #     "File {} uploaded to {}.".format(
