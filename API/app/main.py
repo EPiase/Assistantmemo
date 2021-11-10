@@ -28,20 +28,19 @@ async def create_upload_file(file: UploadFile = File(...)):
     blob = bucket.blob(file.filename)
     
     blob.upload_from_filename("sample_audio.flac")
-    # f = open(f"{file_name}", "a")
-    # f.write()
+
     async with aiofiles.open(f"{filename}{file.filename}", 'wb') as out_file:
         content = await file.read()
         await out_file.write(content)
         print(type(out_file))
-        await blob.upload_from_file(out_file, rewind=True)
+        await blob.upload_from_filename(out_file.name, rewind=True)
 
     # print(
     #     "File {} uploaded to {}.".format(
     #         file.filename, destination_blob_name
     #     )
     # )
-    return {"filename": out_file.name, "destination_blob_name": destination_blob_name}
+    return {"filename": out_file.name, "destination_blob_name": file.filename}
 
 
 
