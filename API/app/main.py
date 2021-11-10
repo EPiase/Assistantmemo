@@ -17,25 +17,31 @@ async def root():
 
 @app.post("/uploadfile/")
 async def create_upload_file(file: UploadFile = File(...)):
-    from google.cloud import storage
-    # from random import randint
-    # file_name = randint(10^8,10^10)
+    # from google.cloud import storage
+    # import tempfile
+    import aiofiles
+    import uuid
+    # tempfile.NamedTemporaryFile
+    filename = str(uuid.uuid4())
     storage_client = storage.Client()
     bucket = storage_client.bucket("assistantmemo-recordings")
     blob = bucket.blob(file.filename)
+    
     # blob.upload_from_filename("/sample_audio.flac")
     # f = open(f"{file_name}", "a")
     # f.write()
-
-    content = await file.read()
-    blob.upload_from_file(content)
+    async with aiofiles.open(f"{filename}{file.filename}", 'wb') as out_file:
+        content = await file.read()
+        await out_file.write(content)
+        print(type(out_file))
+        await blob.upload_from_file(out_file)
 
     # print(
     #     "File {} uploaded to {}.".format(
     #         file.filename, destination_blob_name
     #     )
     # )
-    return {"filename": file.filename}
+    return {"filename": out_file.name, "destination_blob_name": destination_blob_name}
 
 
 

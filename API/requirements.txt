@@ -8,4 +8,5 @@ uvloop
 httptools
 google-cloud-storage
 google-cloud-speech
+aiofiles
 # speech_recognition
