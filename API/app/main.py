@@ -7,7 +7,7 @@ from routers import notes
 app = FastAPI()
 
 
-@app.get("/") #, response_class=HTMLResponse)
+@app.get("/", response_class=HTMLResponse)
 async def root():
     # var = {"message": "Hello API three"}
     res = open("landing_page.html")
