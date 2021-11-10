@@ -9,11 +9,11 @@ app = FastAPI()
 
 @app.get("/") #, response_class=HTMLResponse)
 async def root():
-    var = {"message": "Hello API three"}
-    # res = open("landing_page.html")
+    # var = {"message": "Hello API three"}
+    res = open("landing_page.html")
 
-    # return res.read()
-    return var
+    return res.read()
+    # return var
 
 @app.post("/file/")
 async def transcribe_file(speech_file: UploadFile = File(...)):
