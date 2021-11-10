@@ -17,7 +17,7 @@ async def root():
 
 @app.post("/uploadfile/")
 async def create_upload_file(file: UploadFile = File(...)):
-    # from google.cloud import storage
+    from google.cloud import storage
     # import tempfile
     import aiofiles
     import uuid
