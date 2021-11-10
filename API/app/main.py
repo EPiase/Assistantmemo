@@ -23,10 +23,12 @@ async def create_upload_file(file: UploadFile = File(...)):
     storage_client = storage.Client()
     bucket = storage_client.bucket("assistantmemo-recordings")
     blob = bucket.blob(file.filename)
-
+    # blob.upload_from_filename("/sample_audio.flac")
     # f = open(f"{file_name}", "a")
     # f.write()
-    blob.upload_from_filename(await file.read())
+
+    content = await file.read()
+    blob.upload_from_filename(content)
 
     # print(
     #     "File {} uploaded to {}.".format(
