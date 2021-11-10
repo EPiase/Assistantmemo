@@ -22,7 +22,7 @@ async def create_upload_file(file: UploadFile = File(...)):
     bucket = storage_client.bucket("assistantmemo-recordings")
     blob = bucket.blob(file.filename)
 
-    blob.upload_from_filename(file)
+    blob.upload_from_filename(file.read())
 
     # print(
     #     "File {} uploaded to {}.".format(
