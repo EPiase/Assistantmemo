@@ -33,7 +33,7 @@ async def create_upload_file(file: UploadFile = File(...)):
         content = await file.read()
         await out_file.write(content)
         print(type(out_file))
-        await blob.upload_from_filename(out_file.name)
+        blob.upload_from_filename(out_file.name)
 
     # print(
     #     "File {} uploaded to {}.".format(
