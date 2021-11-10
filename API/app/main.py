@@ -25,10 +25,8 @@ async def create_upload_file(file: UploadFile = File(...)):
     filename = str(uuid.uuid4())
     storage_client = storage.Client()
     bucket = storage_client.bucket("assistantmemo-recordings")
-    blob = bucket.blob(file.filename)
+    blob = bucket.blob(f"{filename}{file.filename}")
     
-    blob.upload_from_filename("sample_audio.flac")
-
     async with aiofiles.open(f"{filename}{file.filename}", 'wb') as out_file:
         content = await file.read()
         await out_file.write(content)
