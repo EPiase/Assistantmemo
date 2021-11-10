@@ -28,7 +28,7 @@ async def create_upload_file(file: UploadFile = File(...)):
     # f.write()
 
     content = await file.read()
-    blob.upload_from_filename(content)
+    blob.upload_from_file(content)
 
     # print(
     #     "File {} uploaded to {}.".format(
