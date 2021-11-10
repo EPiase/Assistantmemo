@@ -4,6 +4,9 @@ from pydantic import BaseModel
 
 class NoteModel(BaseModel):
     note_id: int
-    audio_id: Optional [int]
-    transcript: Optional [str]
-    creation_date: datetime
+    user_id: int
+    audio_URL: Optional [str]
+    transcript: str
+    classification: Optional [str]
+    is_starred: bool
+    date_recorded: datetime

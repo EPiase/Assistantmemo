@@ -15,6 +15,24 @@ async def root():
     return res.read()
     # return var
 
+@app.post("/uploadfile/")
+async def create_upload_file(file: UploadFile = File(...)):
+    from google.cloud import storage
+    storage_client = storage.Client()
+    bucket = storage_client.bucket("assistantmemo-recordings")
+    blob = bucket.blob(file.filename)
+
+    blob.upload_from_filename(file)
+
+    # print(
+    #     "File {} uploaded to {}.".format(
+    #         file.filename, destination_blob_name
+    #     )
+    # )
+    return {"filename": file.filename}
+
+
+
 @app.post("/file/")
 async def transcribe_file(speech_file: UploadFile = File(...)):
     """Transcribe the given audio file asynchronously."""
