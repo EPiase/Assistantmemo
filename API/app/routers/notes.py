@@ -10,15 +10,14 @@ router = APIRouter()
 
 @router.get("/get_note_by_id")
 async def get_note_by_id():
-    '''TODO Check to see if the note exists after completing sql alchemy component''' 
+    """TODO Check to see if the note exists after completing sql alchemy component"""
     note = NoteModel(
-        note_id= 1, 
-        transcript = 'this is a temp fake note', 
-        creation_date= datetime.now())
-    return 'note'
+        note_id=1, transcript="this is a temp fake note", creation_date=datetime.now()
+    )
+    return "note"
 
 
-'''
+"""
 get (x) notes after clause
 	How many?
 	sorted how? (id, date)
@@ -30,4 +29,4 @@ post note (create note w/ audio)
 
 DELETE note by id
 	return status
-'''
+"""

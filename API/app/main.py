@@ -1,63 +1,139 @@
 from fastapi import FastAPI
+from fastapi import responses
 from fastapi.responses import HTMLResponse
 from fastapi import UploadFile, File, Form
+from fastapi.responses import FileResponse
+
 # from google.api_core import retry
 from routers import notes
 
 app = FastAPI()
 
 
-@app.get("/") #, response_class=HTMLResponse)
+@app.get("/", response_class=HTMLResponse)
 async def root():
-    var = {"message": "Hello API three"}
-    # res = open("landing_page.html")
+    # var = {"message": "Hello API three"}
+    res = open("landing_page.html")
 
-    # return res.read()
-    return var
+    return res.read()
+    # return var
 
-@app.post("/file/")
-async def transcribe_file(speech_file: UploadFile = File(...)):
-    """Transcribe the given audio file asynchronously."""
+
+@app.put("/create-note/")
+async def create_note(user_id: str, file: UploadFile = File(...)):
+    from google.cloud import storage
+    from google.cloud import firestore
     from google.cloud import speech
+    from google.cloud import language_v1
+    import tempfile
+    import uuid
+    import datetime
 
+    # create file names
+    audio_filename = str(uuid.uuid4()) + file.filename
+    note_id = str(uuid.uuid4())
+
+    # access GCS
+    storage_client = storage.Client()
+    bucket = storage_client.bucket("assistantmemo-recordings")
+    blob = bucket.blob(audio_filename)
+
+    # upload incoming audio file
+    with tempfile.NamedTemporaryFile() as named_temp_file:
+        named_temp_file.write(await file.read())
+        blob.upload_from_filename(named_temp_file.name)
+        # return {"audio_filename": audio_filename, "local_temp_name": named_temp_file.name}
+
+    # access speech to text api
     client = speech.SpeechClient()
-
-    """
-     Note that transcription is limited to a 60 seconds audio file.
-     Use a GCS file for audio longer than 1 minute.
-    """
-    audio = speech.RecognitionAudio(content=await speech_file.read())
-
+    gcs_uri = f"gs://assistantmemo-recordings/{audio_filename}"
+    audio = speech.RecognitionAudio(uri=gcs_uri)
     config = speech.RecognitionConfig(language_code="en-US")
-
-
     operation = client.long_running_recognize(config=config, audio=audio)
-
-    print("Waiting for operation to complete...")
     response = operation.result(timeout=90)
-    print(response)
-    # Each result is for a consecutive portion of the audio. Iterate through
-    # them to get the transcripts for the entire audio file.
     Transcript = []
-
     for result in response.results:
         # The first alternative is the most likely one for this portion.
         Transcript.append(result.alternatives[0].transcript)
+    Transcript = " ".join(Transcript)
 
-    return Transcript
+    if len(Transcript.split()) > 20:
 
-# filename = "84-121550-0006.flac"
+        # classify text
+        client = language_v1.LanguageServiceClient()
+        type_ = language_v1.Document.Type.PLAIN_TEXT
+        document = {"content": Transcript, "type_": type_}
+        response = client.classify_text(request={"document": document})
+        classification = str(" ".join([cat.name for cat in response.categories]))
+    else:
+        classification = ""
 
-# @app.post("/speech-text")
-# async def speech_text():
-#     import speech_recognition as sr
-#     # initialize the recognizer
-#     r = sr.Recognizer()
-#     # open the file
-#     with sr.AudioFile(filename) as source:
-#         # listen for the data (load audio to memory)
-#         audio_data = r.record(source)
-#         # recognize (convert from speech to text)
-#         text = r.recognize_google(audio_data)
-#         print(text)
-#         return text
+    # access firestore
+    db = firestore.Client()
+    # access and set note in database
+    doc_ref = (
+        db.collection("users").document(user_id).collection("notes").document(note_id)
+    )
+    doc_ref.set(
+        {
+            "audio_filename": audio_filename,
+            "classification": classification,
+            "date_recorded": datetime.datetime.utcnow(),
+            "is_starred": False,
+            "text_transcript": Transcript,
+        }
+    )
+
+
+@app.put("/star-note")
+async def star_note_by_id(note_id: str, user_id: str, star_status: bool):
+    from google.cloud import firestore
+
+    db = firestore.Client()
+    doc_ref = (
+        db.collection("users").document(user_id).collection("notes").document(note_id)
+    )
+    doc_ref.update({"is_starred": star_status})
+
+
+@app.delete("/delete-note")
+async def delete_note_by_id(note_id: str, user_id: str):
+    from google.cloud import firestore
+
+    db = firestore.Client()
+    try:
+        await db.collection("users").document(user_id).collection("notes").document(
+            note_id
+        ).delete()
+        return {"delete status": "success"}
+    except:
+        return {"delete status": "failed"}
+
+
+@app.get("/list-notes")
+async def list_all_note(user_id: str):
+    from google.cloud import firestore
+
+    db = firestore.Client()
+    notes_ref = db.collection("users").document(user_id).collection("notes")
+    list_of_notes = {}
+    for note in notes_ref.stream():
+        list_of_notes[note.id] = note.to_dict()
+    return list_of_notes
+
+
+@app.get("/download_file")
+async def download_file(bucket: str, sblob: str):
+    from google.cloud import storage
+    from starlette.responses import StreamingResponse
+    import io
+
+    storage_client = storage.Client()
+    # get bucket with name
+    bucket = storage_client.get_bucket(bucket)
+    # get bucket data as blob
+    blob = bucket.get_blob(sblob)
+
+    return StreamingResponse(
+        io.BytesIO(blob.download_as_bytes()), media_type="audio/flac"
+    )
