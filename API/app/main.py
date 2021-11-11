@@ -89,6 +89,18 @@ async def star_note_by_id(note_id: str, user_id: str, star_status: bool):
     doc_ref.update({'is_starred': star_status})
 
 
+@app.delete("/delete-note")
+async def delete_note_by_id(note_id: str, user_id: str):
+    from google.cloud import firestore
+    db = firestore.Client()
+    try:
+        await db.collection('users').document(user_id).collection('notes').document(note_id).delete()
+        return {"delete status": "success"}
+    except:
+        return {"delete status": "failed"}
+
+
+
 @app.get("/download_file")
 async def download_file(bucket: str, sblob: str):
     from google.cloud import storage
@@ -103,52 +115,3 @@ async def download_file(bucket: str, sblob: str):
     blob = bucket.get_blob(sblob)
 
     return StreamingResponse(io.BytesIO(blob.download_as_bytes()), media_type='audio/flac')
-
-# @app.get("/firebase")
-# async def get_firebase_users():
-#     from google.cloud import firestore
-#     db = firestore.Client()
-
-#     # Add a new document
-#     # doc_ref = db.collection('users').document('YvVBPoGPal8VVQmCdnnd').collection('notes').document('FWsAw2vjsEl3R1HJgwy0')
-#     # doc_ref.set({
-#     #     'audio_url': '',
-#     #     'classification': '/Computers & Electronics/Computer Hardware/Computer Components',
-#     #     'date_recorded': '11/10/21, 7:44 PM',
-#     #     'is_starred': False,
-#     #     'text_transcript': 'I will be getting a new intel processor over the coming weeks.'
-#     # })
-
-#     # Then query for documents
-#     users_ref = db.collection('users').document('YvVBPoGPal8VVQmCdnnd').collection('notes')
-#     return ['{} => {}'.format(doc.id, doc.to_dict()) for doc in users_ref.stream()]
-
-# async def transcribe_file(speech_file: UploadFile = File(...)):
-#     """Transcribe the given audio file asynchronously."""
-#     from google.cloud import speech
-
-#     client = speech.SpeechClient()
-
-#     """
-#      Note that transcription is limited to a 60 seconds audio file.
-#      Use a GCS file for audio longer than 1 minute.
-#     """
-#     audio = speech.RecognitionAudio(content=await speech_file.read())
-
-#     config = speech.RecognitionConfig(language_code="en-US")
-
-
-#     operation = client.long_running_recognize(config=config, audio=audio)
-
-#     print("Waiting for operation to complete...")
-#     response = operation.result(timeout=90)
-#     print(response)
-#     # Each result is for a consecutive portion of the audio. Iterate through
-#     # them to get the transcripts for the entire audio file.
-#     Transcript = []
-
-#     for result in response.results:
-#         # The first alternative is the most likely one for this portion.
-#         Transcript.append(result.alternatives[0].transcript)
-
-#     return Transcript
