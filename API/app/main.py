@@ -10,10 +10,12 @@ from routers import notes
 app = FastAPI()
 app.include_router(notes.router)
 
+
 @app.get("/", response_class=HTMLResponse)
 async def root():
     res = open("landing_page.html")
     return res.read()
+
 
 @app.get("/download_file")
 async def download_file(bucket: str, sblob: str):

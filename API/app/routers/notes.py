@@ -5,9 +5,7 @@ from google.api_core import retry
 from models.note_model import NoteModel
 from datetime import datetime
 
-router = APIRouter(
-    tags=['note-endpoints']
-)
+router = APIRouter(tags=["note-endpoints"])
 
 
 @router.put("/create-note/")
@@ -75,6 +73,7 @@ async def create_note(user_id: str, file: UploadFile = File(...)):
         }
     )
 
+
 @router.put("/star-note")
 async def star_note_by_id(note_id: str, user_id: str, star_status: bool):
     from google.cloud import firestore
@@ -110,6 +109,7 @@ async def list_all_note(user_id: str):
     for note in notes_ref.stream():
         list_of_notes[note.id] = note.to_dict()
     return list_of_notes
+
 
 @router.get("/get_note_by_id")
 async def get_note_by_id(note_id: str, user_id: str):
