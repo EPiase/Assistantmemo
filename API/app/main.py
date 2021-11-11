@@ -17,19 +17,20 @@ async def root():
     return res.read()
     # return var
 
-@app.post("/create-note/")
+@app.put("/create-note/")
 async def create_note(user_id: str, file: UploadFile = File(...)):
     from google.cloud import storage
     from google.cloud import firestore
     from google.cloud import speech
+    from google.cloud import language_v1
     import tempfile
     import uuid
     import datetime
 
     # create file names
     audio_filename = str(uuid.uuid4()) + file.filename
-    note_filename = str(uuid.uuid4())
-    
+    note_id = str(uuid.uuid4())
+
     # access GCS
     storage_client = storage.Client()
     bucket = storage_client.bucket("assistantmemo-recordings")
@@ -41,17 +42,6 @@ async def create_note(user_id: str, file: UploadFile = File(...)):
         blob.upload_from_filename(named_temp_file.name)
         # return {"audio_filename": audio_filename, "local_temp_name": named_temp_file.name}
 
-    # access firestore
-    db = firestore.Client()
-    # access and set note in database
-    doc_ref = db.collection('users').document(user_id).collection('notes').document(note_filename)
-    doc_ref.set({
-        'audio_filename': audio_filename,
-        'classification': 'misc',
-        'date_recorded': datetime.datetime.utcnow(),
-        'is_starred': False,
-        'text_transcript': ''
-    })
 
     # access speech to text api
     client = speech.SpeechClient()
@@ -64,11 +54,39 @@ async def create_note(user_id: str, file: UploadFile = File(...)):
     for result in response.results:
         # The first alternative is the most likely one for this portion.
         Transcript.append(result.alternatives[0].transcript)
-    return Transcript
+    Transcript = ' '.join(Transcript)
 
 
+    if len(Transcript.split()) > 20:
+        
+        # classify text
+        client = language_v1.LanguageServiceClient()
+        type_ = language_v1.Document.Type.PLAIN_TEXT
+        document = {"content": Transcript, "type_": type_}
+        response = client.classify_text(request = {'document': document})
+        classification =  str(' '.join([cat.name for cat in response.categories]))
+    else:
+        classification = ''
 
 
+    # access firestore
+    db = firestore.Client()
+    # access and set note in database
+    doc_ref = db.collection('users').document(user_id).collection('notes').document(note_id)
+    doc_ref.set({
+        'audio_filename': audio_filename,
+        'classification': classification,
+        'date_recorded': datetime.datetime.utcnow(),
+        'is_starred': False,
+        'text_transcript': Transcript
+    })
+
+@app.put("/star-note")
+async def star_note_by_id(note_id: str, user_id: str, star_status: bool):
+    from google.cloud import firestore
+    db = firestore.Client()
+    doc_ref = db.collection('users').document(user_id).collection('notes').document(note_id)
+    doc_ref.update({'is_starred': star_status})
 
 
 @app.get("/download_file")
