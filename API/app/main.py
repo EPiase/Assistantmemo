@@ -99,6 +99,31 @@ async def delete_note_by_id(note_id: str, user_id: str):
     except:
         return {"delete status": "failed"}
 
+@app.get("/list-notes")
+async def list_all_note(user_id: str):
+    from google.cloud import firestore
+    db = firestore.Client()
+    notes_ref = db.collection('users').document(user_id).collection('notes')
+    list_of_notes = {}
+    for note in notes_ref.stream():
+        list_of_notes[note.id] = note.to_dict()
+    return list_of_notes
+
+    # return notes_ref.stream()
+    # docs = db.collection('users').stream()
+    # for doc in docs:
+    #     return (f'{doc.id} => {doc.to_dict()}')
+
+
+    # users_ref = db.collection('users')
+    # async for doc in users_ref.get():
+    #     val = doc.to_dict() 
+    # return val
+
+
+# Then query for documents
+#     users_ref = db.collection('users').document('YvVBPoGPal8VVQmCdnnd').collection('notes')
+#     return ['{} => {}'.format(doc.id, doc.to_dict()) for doc in users_ref.stream()]
 
 
 @app.get("/download_file")
