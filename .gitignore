@@ -46,7 +46,6 @@ app.*.map.json
 /android/app/release
 
 
-
 # Gitignore section for API
 API/venv
 **/__pycache__
