@@ -1,4 +1,4 @@
-import 'package:app1/micpage.dart';
+import 'package:assistantmemo/micpage.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
@@ -13,26 +13,24 @@ class HomePage extends StatelessWidget {
         title: Text('Notes'),
         actions: [
           Padding(
-              padding: EdgeInsets.only(right: 20.0),
+            padding: EdgeInsets.only(right: 20.0),
             child: GestureDetector(
-              onTap: (){},
+              onTap: () {},
               child: Icon(
                 Icons.search,
-                size:26.0,
+                size: 26.0,
                 color: Colors.white,
-
               ),
             ),
           ),
           Padding(
             padding: EdgeInsets.only(right: 20.0),
             child: GestureDetector(
-              onTap: (){},
+              onTap: () {},
               child: Icon(
                 Icons.settings,
-                size:26.0,
+                size: 26.0,
                 color: Colors.white,
-
               ),
             ),
           ),
@@ -46,12 +44,13 @@ class HomePage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(top: 20,left: 12,right: 12,bottom: 12),
+                    padding: const EdgeInsets.only(
+                        top: 20, left: 12, right: 12, bottom: 12),
                     child: GestureDetector(
-                      onTap: (){},
+                      onTap: () {},
                       child: Container(
-                        width : MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height/4.5,
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height / 4.5,
                         child: Card(
                           color: Colors.white,
                           child: Column(
@@ -59,7 +58,7 @@ class HomePage extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Padding(
-                                padding: const EdgeInsets.only(left:20.0),
+                                padding: const EdgeInsets.only(left: 20.0),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment: MainAxisAlignment.start,
@@ -83,7 +82,10 @@ class HomePage extends StatelessWidget {
                                   SizedBox(
                                     width: 360.0,
                                   ),
-                                  IconButton(icon: Icon(Icons.delete), onPressed: () {  },)
+                                  IconButton(
+                                    icon: Icon(Icons.delete),
+                                    onPressed: () {},
+                                  )
                                 ],
                               ),
                             ],
@@ -93,12 +95,13 @@ class HomePage extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 20,left: 12,right: 12,bottom: 12),
+                    padding: const EdgeInsets.only(
+                        top: 20, left: 12, right: 12, bottom: 12),
                     child: GestureDetector(
-                      onTap: (){},
+                      onTap: () {},
                       child: Container(
-                        width : MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height/4.5,
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height / 4.5,
                         child: Card(
                           color: Colors.white,
                           child: Column(
@@ -106,7 +109,7 @@ class HomePage extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Padding(
-                                padding: const EdgeInsets.only(left:20.0),
+                                padding: const EdgeInsets.only(left: 20.0),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment: MainAxisAlignment.start,
@@ -130,7 +133,10 @@ class HomePage extends StatelessWidget {
                                   SizedBox(
                                     width: 360.0,
                                   ),
-                                  IconButton(icon: Icon(Icons.delete), onPressed: () {  },)
+                                  IconButton(
+                                    icon: Icon(Icons.delete),
+                                    onPressed: () {},
+                                  )
                                 ],
                               ),
                             ],
@@ -151,7 +157,7 @@ class HomePage extends StatelessWidget {
                       MaterialPageRoute(builder: (context) => MicPage()),
                     );
                   },
-                    label: const Text('Speak'),
+                  label: const Text('Speak'),
                   icon: Icon(Icons.mic),
                   backgroundColor: Color(0xff4a7fc1),
                 ),
@@ -160,6 +166,6 @@ class HomePage extends StatelessWidget {
           ),
         ],
       ),
-      );
+    );
   }
 }
