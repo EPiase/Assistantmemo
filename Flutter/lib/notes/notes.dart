@@ -9,15 +9,8 @@ class NotesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Profile'),
+        title: Text('Notes'),
       ),
-      body: ElevatedButton(
-          child: Text('signout'),
-          onPressed: () async {
-            await AuthService().signOut();
-            Navigator.of(context)
-                .pushNamedAndRemoveUntil('/', (route) => false);
-          }),
       bottomNavigationBar: BottomNavBar(),
     );
   }
