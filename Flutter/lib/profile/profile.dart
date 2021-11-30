@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:assistantmemo/services/auth.dart';
-import 'package:assistantmemo/shared/BottomNavBar';
+import 'package:assistantmemo/shared/BottomNavBar.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key}) : super(key: key);

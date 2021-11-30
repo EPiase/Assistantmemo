@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:assistantmemo/services/auth.dart';
-import 'package:assistantmemo/shared/BottomNavBar';
+import 'package:assistantmemo/shared/BottomNavBar.dart';
 
 class NotesScreen extends StatelessWidget {
   const NotesScreen({Key? key}) : super(key: key);
