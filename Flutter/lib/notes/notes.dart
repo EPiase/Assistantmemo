@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:assistantmemo/services/auth.dart';
+import 'package:assistantmemo/shared/BottomNavBar';
 
 class NotesScreen extends StatelessWidget {
   const NotesScreen({Key? key}) : super(key: key);
@@ -17,6 +18,7 @@ class NotesScreen extends StatelessWidget {
             Navigator.of(context)
                 .pushNamedAndRemoveUntil('/', (route) => false);
           }),
+      bottomNavigationBar: BottomNavBar(),
     );
   }
 }
