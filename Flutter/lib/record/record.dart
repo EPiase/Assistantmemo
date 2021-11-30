@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-class MicPage extends StatelessWidget {
-  const MicPage({Key? key}) : super(key: key);
+
+class RecordScreen extends StatelessWidget {
+  const RecordScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -10,7 +11,10 @@ class MicPage extends StatelessWidget {
         backgroundColor: Color(0xff4a7fc1),
         title: Text('Notes'),
         leading: IconButton(
-          icon:Icon(Icons.arrow_back,color:Colors.white,),
+          icon: Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+          ),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -19,22 +23,21 @@ class MicPage extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(right: 20.0),
             child: GestureDetector(
-              onTap: (){},
+              onTap: () {},
               child: Icon(
                 Icons.share,
-                size:26.0,
+                size: 26.0,
                 color: Colors.white,
-
               ),
             ),
           ),
           Padding(
             padding: EdgeInsets.only(right: 20.0),
             child: GestureDetector(
-              onTap: (){},
+              onTap: () {},
               child: Icon(
                 Icons.delete,
-                size:26.0,
+                size: 26.0,
                 color: Colors.white,
               ),
             ),
@@ -44,7 +47,7 @@ class MicPage extends StatelessWidget {
       body: Container(
         child: Center(
           child: Text(
-              'Converting speech to text here!',
+            'Converting speech to text here!',
             style: TextStyle(
               color: Colors.black,
               fontSize: 20.0,
