@@ -24,7 +24,7 @@ async def create_note(user_id: str, file: UploadFile = File(...)):
 
     # access GCS
     storage_client = storage.Client()
-    bucket = storage_client.bucket("assistantmemo-recordings")
+    bucket = storage_client.bucket("fire-assistantmemo-recordings")
     blob = bucket.blob(audio_filename)
 
     # upload incoming audio file
@@ -35,7 +35,7 @@ async def create_note(user_id: str, file: UploadFile = File(...)):
 
     # access speech to text api
     client = speech.SpeechClient()
-    gcs_uri = f"gs://assistantmemo-recordings/{audio_filename}"
+    gcs_uri = f"gs://fire-assistantmemo-recordings/{audio_filename}"
     audio = speech.RecognitionAudio(uri=gcs_uri)
     config = speech.RecognitionConfig(language_code="en-US")
     operation = client.long_running_recognize(config=config, audio=audio)

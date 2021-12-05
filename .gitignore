@@ -45,6 +45,7 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
+Flutter/android/app/google-services.json
 
 # Gitignore section for API
 API/venv
