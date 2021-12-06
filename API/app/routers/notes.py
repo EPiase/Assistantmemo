@@ -88,7 +88,8 @@ async def star_note_by_id(note_id: str, user_id: str, star_status: bool):
 @router.delete("/delete-note")
 async def delete_note_by_id(note_id: str, user_id: str):
     from google.cloud import firestore
-
+    # TODO update how the system checks success or fail. 
+    # Does not seem to be working right.
     db = firestore.Client()
     try:
         await db.collection("users").document(user_id).collection("notes").document(
