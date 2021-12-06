@@ -96,8 +96,8 @@ async def delete_note_by_id(note_id: str, user_id: str):
             note_id
         ).delete()
         return {"delete status": "success"}
-    except:
-        return {"delete status": "failed"}
+    except BaseException as err:
+        return {"delete status": f"{err}{type(err)}"}
 
 
 @router.get("/list-notes")
