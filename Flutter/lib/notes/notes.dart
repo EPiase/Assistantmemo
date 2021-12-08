@@ -1,5 +1,5 @@
+import 'package:assistantmemo/services/models.dart';
 import 'package:flutter/material.dart';
-import 'package:assistantmemo/services/auth.dart';
 import 'package:assistantmemo/shared/BottomNavBar.dart';
 import 'package:assistantmemo/services/serverAPI.dart';
 
@@ -28,23 +28,22 @@ class showID extends StatefulWidget {
 class _showIDState extends State<showID> {
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
+    return FutureBuilder<List<Note>>(
       // Initialize FlutterFire:
-      future: AuthService().getUID(),
+      future: listNotes(),
       builder: (context, snapshot) {
         // Check for errors
         if (snapshot.hasError) {
-          return Text('error');
+          return Text(snapshot.error.toString());
+        } else if (snapshot.hasData) {
+          var note = snapshot.data!;
+          return Text(note.toString());
+        } else if (snapshot.connectionState == ConnectionState.waiting) {
+          return Text('loading', textDirection: TextDirection.ltr);
+        } else {
+          return Text(
+              "Really strange error, there might be missing data in DB");
         }
-
-        // Once complete, show your application
-        if (snapshot.connectionState == ConnectionState.done) {
-          String uid = snapshot.data.toString();
-          return Text("current user: $uid");
-          // return Text(snapshot.data.toString());
-        }
-        // Otherwise, show something whilst waiting for initialization to complete
-        return Text('loading', textDirection: TextDirection.ltr);
       },
     );
   }
