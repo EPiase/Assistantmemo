@@ -44,7 +44,7 @@ Future<String> listNotes() async {
   }
 }
 
-Future<String> getNote(String noteID) async {
+Future<Note> getNote(String noteID) async {
   String UID = await AuthService().getUID();
   var url = Uri.parse(
       'https://assistantmemo-u4oydnyd5q-uc.a.run.app/get_note_by_id?user_id=$UID&note_id=$noteID');

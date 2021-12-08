@@ -29,7 +29,7 @@ class _showIDState extends State<showID> {
   Widget build(BuildContext context) {
     return FutureBuilder(
       // Initialize FlutterFire:
-      future: listNotes(),
+      future: getNote('f819467a-d9bc-4388-bc34-74210aa30a80'),
       builder: (context, snapshot) {
         // Check for errors
         if (snapshot.hasError) {
