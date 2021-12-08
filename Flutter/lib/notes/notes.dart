@@ -8,36 +8,16 @@ class NotesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Notes'),
-      ),
-      body: showID(),
-      bottomNavigationBar: BottomNavBar(),
-    );
-  }
-}
-
-class showID extends StatefulWidget {
-  const showID({Key? key}) : super(key: key);
-
-  @override
-  _showIDState createState() => _showIDState();
-}
-
-class _showIDState extends State<showID> {
-  @override
-  Widget build(BuildContext context) {
     return FutureBuilder<List<Note>>(
       // Initialize FlutterFire:
-      future: FirestoreService().getTopics(),
+      future: FirestoreService().listNotes(),
       builder: (context, snapshot) {
         // Check for errors
         if (snapshot.hasError) {
           return Text(snapshot.error.toString());
         } else if (snapshot.hasData) {
           var notes = snapshot.data!;
-          return Text(notes.toString());
+          return ListOfNotes(notes: notes);
         } else if (snapshot.connectionState == ConnectionState.waiting) {
           return Text('loading', textDirection: TextDirection.ltr);
         } else {
@@ -48,33 +28,30 @@ class _showIDState extends State<showID> {
     );
   }
 }
-// class showID extends StatelessWidget {
-//   const showID({Key? key}) : super(key: key);
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return StreamBuilder(
-//         stream: AuthService().userStream,
-//         builder: (context, snapshot) {
-//           if (snapshot.connectionState == ConnectionState.waiting) {
-//             // return const LoadingScreen();
-//             return const Text('loading');
-//           } else if (snapshot.hasError) {
-//             return const Center(
-//               child: Text('error'),
-//               // child: ErrorMessage(),
-//             );
-//           } else if (snapshot.hasData) {
-//             // return const TopicsScreen();
-//             // String userData = snapshot.data.toString();
-//             // return Center(child: Text(snapshot.data.toString()));
-//             return Text(AuthService().getUID());
-//           } else {
-//             return const Center(
-//               child: Text('error'),
-//               // child: ErrorMessage(),
-//             );
-//           }
-//         });
-//   }
-// }
+class ListOfNotes extends StatelessWidget {
+  const ListOfNotes({
+    Key? key,
+    required this.notes,
+  }) : super(key: key);
+
+  final List<Note> notes;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('notes'),
+      ),
+      body: GridView.count(
+        primary: false,
+        padding: const EdgeInsets.all(20.0),
+        crossAxisCount: 1,
+        crossAxisSpacing: 1,
+        mainAxisSpacing: 100,
+        children: notes.map((note) => Text(note.text_transcript)).toList(),
+      ),
+      bottomNavigationBar: BottomNavBar(),
+    );
+  }
+}
