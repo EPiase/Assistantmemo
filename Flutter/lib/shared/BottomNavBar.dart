@@ -34,7 +34,19 @@ class BottomNavBar extends StatelessWidget {
       onTap: (int idx) {
         switch (idx) {
           case 0:
-            Navigator.pushNamed(context, '/Notes');
+            // Navigator.popUntil(context, ModalRoute.withName('/Notes'));
+            final newRouteName = "/Notes";
+            bool isNewRouteSameAsCurrent = false;
+            Navigator.popUntil(context, (route) {
+              if (route.settings.name == newRouteName) {
+                isNewRouteSameAsCurrent = true;
+              }
+              return true;
+            });
+
+            if (!isNewRouteSameAsCurrent) {
+              Navigator.pushNamed(context, newRouteName);
+            }
             break;
           case 1:
             Navigator.pushNamed(context, '/Record');

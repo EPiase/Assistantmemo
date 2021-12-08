@@ -3,6 +3,7 @@ part 'models.g.dart';
 
 @JsonSerializable()
 class Note {
+  int note_id;
   String audio_filename;
   String classification;
   DateTime date_recorded;
@@ -10,7 +11,8 @@ class Note {
   String text_transcript;
 
   Note(
-      {this.audio_filename = '',
+      {this.note_id = 0,
+      this.audio_filename = '',
       this.classification = '',
       DateTime? date_recorded,
       this.is_starred = false,

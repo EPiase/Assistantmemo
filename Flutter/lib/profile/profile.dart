@@ -18,7 +18,6 @@ class ProfileScreen extends StatelessWidget {
             Navigator.of(context)
                 .pushNamedAndRemoveUntil('/', (route) => false);
           }),
-      bottomNavigationBar: BottomNavBar(),
     );
   }
 }
