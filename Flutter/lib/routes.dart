@@ -12,7 +12,7 @@ import 'package:flutter/material.dart';
 var appRoutes = {
   '/': (context) => const HomeScreen(),
   '/login': (context) => const LoginScreen(),
-  '/Record': (context) => RecordScreen(onStop: (String path) {}),
+  '/Record': (context) => RecordingSlide(),
   // '/Record': (context) => const AudioRecorder(),
   '/Notes': (context) => const NotesScreen(),
   '/Profile': (context) => const ProfileScreen(),
