@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
+import 'package:assistantmemo/services/models.dart';
 
 Future<String> createNoteFromPath(String path, String UID) async {
   var uri = Uri.parse(
@@ -23,23 +25,23 @@ Future<String> createNoteFromPath(String path, String UID) async {
   }
 }
 
-Future<String> listNotes(String UID) async {
-  var url = Uri.parse(
-      'https://assistantmemo-u4oydnyd5q-uc.a.run.app/list-notes?user_id=$UID');
-  final response = await http.get(url);
+// Future<Note> listNotes(String UID) async {
+//   var url = Uri.parse(
+//       'https://assistantmemo-u4oydnyd5q-uc.a.run.app/list-notes?user_id=$UID');
+//   final response = await http.get(url);
 
-  if (response.statusCode == 200) {
-    // If the server did return a 200 OK response,
-    // then parse the JSON.
-    return response.body;
-  } else {
-    // If the server did not return a 200 OK response,
-    // then throw an exception.
-    throw Exception('Failed to load request');
-  }
-}
+//   if (response.statusCode == 200) {
+//     // If the server did return a 200 OK response,
+//     // then parse the JSON.
+//     return response.body;
+//   } else {
+//     // If the server did not return a 200 OK response,
+//     // then throw an exception.
+//     throw Exception('Failed to load request');
+//   }
+// }
 
-Future<String> getNote(String UID, String noteID) async {
+Future<Note> getNote(String UID, String noteID) async {
   var url = Uri.parse(
       'https://assistantmemo-u4oydnyd5q-uc.a.run.app/get_note_by_id?user_id=$UID&note_id=$noteID');
   final response = await http.get(url);
@@ -47,7 +49,8 @@ Future<String> getNote(String UID, String noteID) async {
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response,
     // then parse the JSON.
-    return response.body;
+    final parsed = jsonDecode(response.body); //.cast<Map<String, dynamic>>();
+    return await Note.fromJson(parsed);
   } else {
     // If the server did not return a 200 OK response,
     // then throw an exception.
