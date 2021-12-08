@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
+import 'package:assistantmemo/services/models.dart';
 import 'package:assistantmemo/services/auth.dart';
 
 Future<String> createNoteFromPath(String path) async {
@@ -42,7 +44,7 @@ Future<String> listNotes() async {
   }
 }
 
-Future<String> getNote(String noteID) async {
+Future<Note> getNote(String noteID) async {
   String UID = await AuthService().getUID();
   var url = Uri.parse(
       'https://assistantmemo-u4oydnyd5q-uc.a.run.app/get_note_by_id?user_id=$UID&note_id=$noteID');
@@ -51,7 +53,8 @@ Future<String> getNote(String noteID) async {
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response,
     // then parse the JSON.
-    return response.body;
+    final parsed = jsonDecode(response.body); //.cast<Map<String, dynamic>>();
+    return await Note.fromJson(parsed);
   } else {
     // If the server did not return a 200 OK response,
     // then throw an exception.
