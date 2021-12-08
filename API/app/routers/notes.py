@@ -92,7 +92,7 @@ async def delete_note_by_id(note_id: str, user_id: str):
     # Does not seem to be working right.
     db = firestore.Client()
     try:
-        await db.collection("users").document(user_id).collection("notes").document(
+        return db.collection("users").document(user_id).collection("notes").document(
             note_id
         ).delete()
         return {"delete status": "success"}

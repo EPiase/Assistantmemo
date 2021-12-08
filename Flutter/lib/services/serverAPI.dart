@@ -1,7 +1,5 @@
 import 'dart:async';
 import 'package:http/http.dart' as http;
-
-import 'package:flutter/material.dart';
 import 'package:http_parser/http_parser.dart';
 
 Future<String> createNoteFromPath(String path, String UID) async {
@@ -103,51 +101,51 @@ Future<String> starNote(String UID, String noteID, bool starStatus) async {
 //       'lTcVQBFclld6JkQZ2R6WKTWu7fB2', 'd6378a2e-2b53-492d-b537-59f211015076'));
 // }
 
-void main() => runApp(const MyApp());
+// void main() => runApp(const MyApp());
 
-class MyApp extends StatefulWidget {
-  const MyApp({Key? key}) : super(key: key);
+// class MyApp extends StatefulWidget {
+//   const MyApp({Key? key}) : super(key: key);
 
-  @override
-  _MyAppState createState() => _MyAppState();
-}
+//   @override
+//   _MyAppState createState() => _MyAppState();
+// }
 
-class _MyAppState extends State<MyApp> {
-  late Future<String> futureNotes;
+// class _MyAppState extends State<MyApp> {
+//   late Future<String> futureNotes;
 
-  @override
-  void initState() {
-    super.initState();
-    futureNotes = listNotes();
-  }
+//   @override
+//   void initState() {
+//     super.initState();
+//     futureNotes = listNotes();
+//   }
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Fetch Data Example',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Fetch Data Example'),
-        ),
-        body: Center(
-          child: FutureBuilder<String>(
-            future: futureNotes,
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return Text(snapshot.data!);
-              } else if (snapshot.hasError) {
-                return Text('${snapshot.error}');
-              }
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       title: 'Fetch Data Example',
+//       theme: ThemeData(
+//         primarySwatch: Colors.blue,
+//       ),
+//       home: Scaffold(
+//         appBar: AppBar(
+//           title: const Text('Fetch Data Example'),
+//         ),
+//         body: Center(
+//           child: FutureBuilder<String>(
+//             future: futureNotes,
+//             builder: (context, snapshot) {
+//               if (snapshot.hasData) {
+//                 return Text(snapshot.data!);
+//               } else if (snapshot.hasError) {
+//                 return Text('${snapshot.error}');
+//               }
 
-              // By default, show a loading spinner.
-              return const CircularProgressIndicator();
-            },
-          ),
-        ),
-      ),
-    );
-  }
-}
+//               // By default, show a loading spinner.
+//               return const CircularProgressIndicator();
+//             },
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }

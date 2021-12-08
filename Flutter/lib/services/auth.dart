@@ -18,6 +18,19 @@ class AuthService {
     await FirebaseAuth.instance.signOut();
   }
 
+  Future<String> getUID() async {
+    if (user != null) {
+      final tokenResult = await user;
+      if (tokenResult != null) {
+        return await tokenResult.uid;
+      } else {
+        return "error";
+      }
+    } else {
+      return "error";
+    }
+  }
+
   Future<void> googleLogin() async {
     try {
       final googleUser = await GoogleSignIn().signIn();
