@@ -1,6 +1,18 @@
 import 'package:json_annotation/json_annotation.dart';
 part 'models.g.dart';
 
+class TimestampConverter implements JsonConverter<DateTime, Timestamp> {
+  const TimestampConverter();
+
+  @override
+  DateTime fromJson(Timestamp timestamp) {
+    return timestamp.toDate();
+  }
+
+  @override
+  Timestamp toJson(DateTime date) => Timestamp.fromDate(date);
+}
+
 @JsonSerializable()
 class Note {
   int note_id;

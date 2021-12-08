@@ -28,16 +28,16 @@ class showID extends StatefulWidget {
 class _showIDState extends State<showID> {
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<Note>(
+    return FutureBuilder<List<Note>>(
       // Initialize FlutterFire:
-      future: getNote('2be47a56-e78d-4ef3-a526-b052b3181cdd'),
+      future: FirestoreService().getTopics(),
       builder: (context, snapshot) {
         // Check for errors
         if (snapshot.hasError) {
           return Text(snapshot.error.toString());
         } else if (snapshot.hasData) {
-          var note = snapshot.data!;
-          return Text(note.toString());
+          var notes = snapshot.data!;
+          return Text(notes.toString());
         } else if (snapshot.connectionState == ConnectionState.waiting) {
           return Text('loading', textDirection: TextDirection.ltr);
         } else {
