@@ -27,7 +27,7 @@ Future<String> createNoteFromPath(String path) async {
   }
 }
 
-Future<String> listNotes() async {
+Future<List<Note>> listNotes() async {
   String UID = await AuthService().getUID();
   var url = Uri.parse(
       'https://assistantmemo-u4oydnyd5q-uc.a.run.app/list-notes?user_id=$UID');
@@ -36,7 +36,16 @@ Future<String> listNotes() async {
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response,
     // then parse the JSON.
-    return response.body;
+    // var parsed = jsonDecode(response.body);
+    // var data = parsed.map((s) => s.data());
+    // var Notes = data.map((d) => Note.fromJson(d));
+    // return Notes.toList();
+
+    Map<String, dynamic> map = json.decode(response.body);
+    List<dynamic> data = map["dataKey"];
+    List<Note> Notes =
+        List<Note>.from(data.map((model) => Note.fromJson(model)));
+    return Notes;
   } else {
     // If the server did not return a 200 OK response,
     // then throw an exception.

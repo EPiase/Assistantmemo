@@ -30,14 +30,14 @@ class _showIDState extends State<showID> {
   Widget build(BuildContext context) {
     return FutureBuilder<Note>(
       // Initialize FlutterFire:
-      future: getNote('f819467a-d9bc-4388-bc34-74210aa30a80'),
+      future: getNote('2be47a56-e78d-4ef3-a526-b052b3181cdd'),
       builder: (context, snapshot) {
         // Check for errors
         if (snapshot.hasError) {
-          return Text('error');
+          return Text(snapshot.error.toString());
         } else if (snapshot.hasData) {
           var note = snapshot.data!;
-          return Text(note.text_transcript);
+          return Text(note.toString());
         } else if (snapshot.connectionState == ConnectionState.waiting) {
           return Text('loading', textDirection: TextDirection.ltr);
         } else {

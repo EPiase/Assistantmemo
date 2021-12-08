@@ -1,5 +1,4 @@
 import 'package:assistantmemo/notes/notes.dart';
-import 'package:assistantmemo/record/record.dart';
 import 'package:assistantmemo/services/auth.dart';
 import 'package:assistantmemo/login/login.dart';
 import 'package:flutter/material.dart';
