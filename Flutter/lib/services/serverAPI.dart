@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
+import 'package:assistantmemo/services/auth.dart';
 
-Future<String> createNoteFromPath(String path, String UID) async {
+Future<String> createNoteFromPath(String path) async {
+  String UID = await AuthService().getUID();
   var uri = Uri.parse(
       'https://assistantmemo-u4oydnyd5q-uc.a.run.app/create-note/?user_id=$UID');
   // final response = await http.get(url);
@@ -23,7 +25,8 @@ Future<String> createNoteFromPath(String path, String UID) async {
   }
 }
 
-Future<String> listNotes(String UID) async {
+Future<String> listNotes() async {
+  String UID = await AuthService().getUID();
   var url = Uri.parse(
       'https://assistantmemo-u4oydnyd5q-uc.a.run.app/list-notes?user_id=$UID');
   final response = await http.get(url);
@@ -39,7 +42,8 @@ Future<String> listNotes(String UID) async {
   }
 }
 
-Future<String> getNote(String UID, String noteID) async {
+Future<String> getNote(String noteID) async {
+  String UID = await AuthService().getUID();
   var url = Uri.parse(
       'https://assistantmemo-u4oydnyd5q-uc.a.run.app/get_note_by_id?user_id=$UID&note_id=$noteID');
   final response = await http.get(url);
@@ -55,7 +59,8 @@ Future<String> getNote(String UID, String noteID) async {
   }
 }
 
-Future<String> deleteNote(String UID, String noteID) async {
+Future<String> deleteNote(String noteID) async {
+  String UID = await AuthService().getUID();
   var url = Uri.parse(
       'https://assistantmemo-u4oydnyd5q-uc.a.run.app/delete-note?user_id=$UID&note_id=$noteID');
   final response = await http.delete(url);
@@ -71,7 +76,8 @@ Future<String> deleteNote(String UID, String noteID) async {
   }
 }
 
-Future<String> starNote(String UID, String noteID, bool starStatus) async {
+Future<String> starNote(String noteID, bool starStatus) async {
+  String UID = await AuthService().getUID();
   var url = Uri.parse(
       'https://assistantmemo-u4oydnyd5q-uc.a.run.app/star-note?user_id=$UID&note_id=$noteID&star_status=$starStatus');
   final response = await http.put(url);

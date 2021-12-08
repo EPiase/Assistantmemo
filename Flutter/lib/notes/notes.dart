@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:assistantmemo/services/auth.dart';
 import 'package:assistantmemo/shared/BottomNavBar.dart';
 import 'package:assistantmemo/services/serverAPI.dart';
 
@@ -30,7 +29,7 @@ class _showIDState extends State<showID> {
   Widget build(BuildContext context) {
     return FutureBuilder(
       // Initialize FlutterFire:
-      future: AuthService().getUID(),
+      future: listNotes(),
       builder: (context, snapshot) {
         // Check for errors
         if (snapshot.hasError) {
@@ -40,7 +39,7 @@ class _showIDState extends State<showID> {
         // Once complete, show your application
         if (snapshot.connectionState == ConnectionState.done) {
           String uid = snapshot.data.toString();
-          return Text("current user: $uid");
+          return Text("listNotes: $uid");
           // return Text(snapshot.data.toString());
         }
         // Otherwise, show something whilst waiting for initialization to complete
