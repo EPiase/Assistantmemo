@@ -4,9 +4,6 @@ import 'package:flutter/material.dart';
 // Import the firebase_core plugin
 import 'package:firebase_core/firebase_core.dart';
 
-// // import pages
-// import 'package:assistantmemo/home/homepage.dart';
-
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(App());
