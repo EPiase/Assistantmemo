@@ -1,6 +1,4 @@
 import 'dart:async';
-// import 'dart:js';
-import 'package:assistantmemo/main.dart';
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart' as ap;
 import 'package:record/record.dart';

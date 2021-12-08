@@ -28,9 +28,9 @@ class showID extends StatefulWidget {
 class _showIDState extends State<showID> {
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<Note>>(
+    return FutureBuilder<Note>(
       // Initialize FlutterFire:
-      future: listNotes(),
+      future: getNote('2be47a56-e78d-4ef3-a526-b052b3181cdd'),
       builder: (context, snapshot) {
         // Check for errors
         if (snapshot.hasError) {

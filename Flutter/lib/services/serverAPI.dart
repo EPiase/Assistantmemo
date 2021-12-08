@@ -43,7 +43,8 @@ Future<List<Note>> listNotes() async {
 
     Map<String, dynamic> map = json.decode(response.body);
     List<dynamic> data = map["dataKey"];
-    List<Note> Notes = List<Note>.from(l.map((model) => Note.fromJson(model)));
+    List<Note> Notes =
+        List<Note>.from(data.map((model) => Note.fromJson(model)));
     return Notes;
   } else {
     // If the server did not return a 200 OK response,
