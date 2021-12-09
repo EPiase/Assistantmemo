@@ -40,6 +40,8 @@ dependencies:
   record: ^3.0.2
   just_audio: ^0.9.18
   favorite_button: ^0.0.4
+  shared_preferences: ^2.0.10
+  fluttertoast: ^8.0.8
 
 dev_dependencies:
   flutter_test:

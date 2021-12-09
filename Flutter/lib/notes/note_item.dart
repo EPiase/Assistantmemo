@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:assistantmemo/services/serverAPI.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:assistantmemo/services/models.dart';
 import 'package:just_audio/just_audio.dart' as ap;
@@ -113,8 +114,39 @@ class NoteScreen extends StatelessWidget {
         ),
         ReadyPlayer(
           note: note,
+        ),
+        Categories(
+          note: note,
         )
       ]),
+    );
+  }
+}
+
+class Categories extends StatelessWidget {
+  Categories({Key? key, required this.note}) : super(key: key);
+
+  final Note note;
+  final myController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Wrap(
+      children: <Widget>[
+        TextField(
+          decoration: InputDecoration(
+            border: OutlineInputBorder(),
+            hintText: 'Assign Category to Note',
+          ),
+        controller: myController,
+        ),
+        Center(
+          child: OutlinedButton(
+            child: Text("Add Category"),
+            onPressed: () {},
+          ),
+        )
+      ],
     );
   }
 }
