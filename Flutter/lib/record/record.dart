@@ -317,9 +317,7 @@ class AudioPlayerState extends State<AudioPlayer> {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        return Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        return Wrap(
           children: <Widget>[
             _buildControl(),
             _buildSlider(constraints.maxWidth),
@@ -329,6 +327,13 @@ class AudioPlayerState extends State<AudioPlayer> {
               onPressed: () {
                 _audioPlayer.stop().then((value) => widget.onDelete());
               },
+            ),
+            Center(
+              child: IconButton(
+                icon: Icon(Icons.upload, color: const Color(0xFF73748D)),
+                iconSize: 100,
+                onPressed: () {},
+              ),
             ),
           ],
         );
