@@ -2,42 +2,23 @@ import 'package:assistantmemo/services/models.dart';
 import 'package:flutter/material.dart';
 import 'package:assistantmemo/shared/BottomNavBar.dart';
 import 'package:assistantmemo/services/serverAPI.dart';
+import 'package:assistantmemo/notes/note_item.dart';
 
 class NotesScreen extends StatelessWidget {
   const NotesScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Notes'),
-      ),
-      body: showID(),
-      bottomNavigationBar: BottomNavBar(),
-    );
-  }
-}
-
-class showID extends StatefulWidget {
-  const showID({Key? key}) : super(key: key);
-
-  @override
-  _showIDState createState() => _showIDState();
-}
-
-class _showIDState extends State<showID> {
-  @override
-  Widget build(BuildContext context) {
-    return FutureBuilder<Note>(
+    return FutureBuilder<List<Note>>(
       // Initialize FlutterFire:
-      future: getNote('2be47a56-e78d-4ef3-a526-b052b3181cdd'),
+      future: FirestoreService().listNotes(),
       builder: (context, snapshot) {
         // Check for errors
         if (snapshot.hasError) {
           return Text(snapshot.error.toString());
         } else if (snapshot.hasData) {
-          var note = snapshot.data!;
-          return Text(note.toString());
+          var notes = snapshot.data!;
+          return ListOfNotes(notes: notes);
         } else if (snapshot.connectionState == ConnectionState.waiting) {
           return Text('loading', textDirection: TextDirection.ltr);
         } else {
@@ -48,33 +29,30 @@ class _showIDState extends State<showID> {
     );
   }
 }
-// class showID extends StatelessWidget {
-//   const showID({Key? key}) : super(key: key);
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return StreamBuilder(
-//         stream: AuthService().userStream,
-//         builder: (context, snapshot) {
-//           if (snapshot.connectionState == ConnectionState.waiting) {
-//             // return const LoadingScreen();
-//             return const Text('loading');
-//           } else if (snapshot.hasError) {
-//             return const Center(
-//               child: Text('error'),
-//               // child: ErrorMessage(),
-//             );
-//           } else if (snapshot.hasData) {
-//             // return const TopicsScreen();
-//             // String userData = snapshot.data.toString();
-//             // return Center(child: Text(snapshot.data.toString()));
-//             return Text(AuthService().getUID());
-//           } else {
-//             return const Center(
-//               child: Text('error'),
-//               // child: ErrorMessage(),
-//             );
-//           }
-//         });
-//   }
-// }
+class ListOfNotes extends StatelessWidget {
+  const ListOfNotes({
+    Key? key,
+    required this.notes,
+  }) : super(key: key);
+
+  final List<Note> notes;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('notes'),
+      ),
+      body: GridView.count(
+        primary: false,
+        padding: const EdgeInsets.all(20.0),
+        crossAxisCount: 1,
+        crossAxisSpacing: 1,
+        mainAxisSpacing: 100,
+        children: notes.map((note) => NoteItem(note: note)).toList(),
+      ),
+      bottomNavigationBar: BottomNavBar(),
+    );
+  }
+}

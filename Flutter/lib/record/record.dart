@@ -40,28 +40,26 @@ class _RecordScreenState extends State<RecordScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                _buildRecordStopControl(),
-                const SizedBox(width: 20),
-                _buildPauseResumeControl(),
-                const SizedBox(width: 20),
-                _buildText(),
-              ],
-            ),
-            if (_amplitude != null) ...[
-              const SizedBox(height: 40),
-              Text('Current: ${_amplitude?.current ?? 0.0}'),
-              Text('Max: ${_amplitude?.max ?? 0.0}'),
+    return Scaffold(
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              _buildRecordStopControl(),
+              const SizedBox(width: 20),
+              _buildPauseResumeControl(),
+              const SizedBox(width: 20),
+              _buildText(),
             ],
+          ),
+          if (_amplitude != null) ...[
+            const SizedBox(height: 40),
+            Text('Current: ${_amplitude?.current ?? 0.0}'),
+            Text('Max: ${_amplitude?.max ?? 0.0}'),
           ],
-        ),
+        ],
       ),
     );
   }
@@ -229,28 +227,29 @@ class _RecordingSlideState extends State<RecordingSlide> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: showPlayer
-              ? Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 25),
-                  child: AudioPlayer(
-                    source: audioSource!,
-                    onDelete: () {
-                      setState(() => showPlayer = false);
-                    },
-                  ),
-                )
-              : RecordScreen(
-                  onStop: (path) {
-                    setState(() {
-                      audioSource = ap.AudioSource.uri(Uri.parse(path));
-                      showPlayer = true;
-                    });
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Record'),
+      ),
+      body: Center(
+        child: showPlayer
+            ? Padding(
+                padding: EdgeInsets.symmetric(horizontal: 25),
+                child: AudioPlayer(
+                  source: audioSource!,
+                  onDelete: () {
+                    setState(() => showPlayer = false);
                   },
                 ),
-        ),
+              )
+            : RecordScreen(
+                onStop: (path) {
+                  setState(() {
+                    audioSource = ap.AudioSource.uri(Uri.parse(path));
+                    showPlayer = true;
+                  });
+                },
+              ),
       ),
     );
   }

@@ -1,9 +1,31 @@
 import 'dart:async';
-import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:assistantmemo/services/models.dart';
 import 'package:assistantmemo/services/auth.dart';
+
+class FirestoreService {
+  final FirebaseFirestore _db = FirebaseFirestore.instance;
+
+  /// Reads all documments from the notes collection
+  Future<List<Note>> listNotes() async {
+    String UID = await AuthService().getUID();
+    var ref = _db.collection('users').doc(UID).collection('notes');
+    var snapshot = await ref.get();
+    var data = snapshot.docs.map((s) => s.data());
+    var notes = data.map((d) => Note.fromJson(d));
+    return notes.toList();
+  }
+
+  /// Retrieves a single note document
+  Future<Note> getNote(String noteID) async {
+    String UID = await AuthService().getUID();
+    var ref = _db.collection('users').doc(UID).collection('notes').doc(noteID);
+    var snapshot = await ref.get();
+    return Note.fromJson(snapshot.data() ?? {});
+  }
+}
 
 Future<String> createNoteFromPath(String path) async {
   String UID = await AuthService().getUID();
@@ -20,50 +42,6 @@ Future<String> createNoteFromPath(String path) async {
     // then parse the JSON.
     // return response.body;
     return 'success';
-  } else {
-    // If the server did not return a 200 OK response,
-    // then throw an exception.
-    throw Exception('Failed to load request');
-  }
-}
-
-Future<List<Note>> listNotes() async {
-  String UID = await AuthService().getUID();
-  var url = Uri.parse(
-      'https://assistantmemo-u4oydnyd5q-uc.a.run.app/list-notes?user_id=$UID');
-  final response = await http.get(url);
-
-  if (response.statusCode == 200) {
-    // If the server did return a 200 OK response,
-    // then parse the JSON.
-    // var parsed = jsonDecode(response.body);
-    // var data = parsed.map((s) => s.data());
-    // var Notes = data.map((d) => Note.fromJson(d));
-    // return Notes.toList();
-
-    Map<String, dynamic> map = json.decode(response.body);
-    List<dynamic> data = map["dataKey"];
-    List<Note> Notes =
-        List<Note>.from(data.map((model) => Note.fromJson(model)));
-    return Notes;
-  } else {
-    // If the server did not return a 200 OK response,
-    // then throw an exception.
-    throw Exception('Failed to load request');
-  }
-}
-
-Future<Note> getNote(String noteID) async {
-  String UID = await AuthService().getUID();
-  var url = Uri.parse(
-      'https://assistantmemo-u4oydnyd5q-uc.a.run.app/get_note_by_id?user_id=$UID&note_id=$noteID');
-  final response = await http.get(url);
-
-  if (response.statusCode == 200) {
-    // If the server did return a 200 OK response,
-    // then parse the JSON.
-    final parsed = jsonDecode(response.body); //.cast<Map<String, dynamic>>();
-    return await Note.fromJson(parsed);
   } else {
     // If the server did not return a 200 OK response,
     // then throw an exception.
@@ -104,66 +82,3 @@ Future<String> starNote(String noteID, bool starStatus) async {
     throw Exception('Failed to load request');
   }
 }
-
-// main() async {
-//   // String futureResponse = await createNoteFromPath();
-//   // print(await createNoteFromPath(
-//   //     '/home/alex/Assistantmemo/Flutter/assets/untitled.flac',
-//   //     'lTcVQBFclld6JkQZ2R6WKTWu7fB2'));
-//   // print(await starNote('lTcVQBFclld6JkQZ2R6WKTWu7fB2',
-//   //     '20cd6e8d-158b-42ae-88b6-a50a9cd345b8', false));
-//   print(await listNotes('lTcVQBFclld6JkQZ2R6WKTWu7fB2'));
-//   // print(await getNote(
-//   //     'lTcVQBFclld6JkQZ2R6WKTWu7fB2', '20cd6e8d-158b-42ae-88b6-a50a9cd345b8'));
-//   print(await deleteNote(
-//       'lTcVQBFclld6JkQZ2R6WKTWu7fB2', 'd6378a2e-2b53-492d-b537-59f211015076'));
-// }
-
-// void main() => runApp(const MyApp());
-
-// class MyApp extends StatefulWidget {
-//   const MyApp({Key? key}) : super(key: key);
-
-//   @override
-//   _MyAppState createState() => _MyAppState();
-// }
-
-// class _MyAppState extends State<MyApp> {
-//   late Future<String> futureNotes;
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     futureNotes = listNotes();
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       title: 'Fetch Data Example',
-//       theme: ThemeData(
-//         primarySwatch: Colors.blue,
-//       ),
-//       home: Scaffold(
-//         appBar: AppBar(
-//           title: const Text('Fetch Data Example'),
-//         ),
-//         body: Center(
-//           child: FutureBuilder<String>(
-//             future: futureNotes,
-//             builder: (context, snapshot) {
-//               if (snapshot.hasData) {
-//                 return Text(snapshot.data!);
-//               } else if (snapshot.hasError) {
-//                 return Text('${snapshot.error}');
-//               }
-
-//               // By default, show a loading spinner.
-//               return const CircularProgressIndicator();
-//             },
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }

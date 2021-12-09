@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:json_annotation/json_annotation.dart';
 part 'models.g.dart';
 
@@ -5,18 +6,21 @@ part 'models.g.dart';
 class Note {
   String audio_filename;
   String classification;
-  DateTime date_recorded;
+  final DateTime date_recorded;
   bool is_starred;
   String text_transcript;
 
-  Note(
+  Note(this.date_recorded,
       {this.audio_filename = '',
-      this.classification = '',
-      DateTime? date_recorded,
+      this.classification = 'Short Note',
       this.is_starred = false,
-      this.text_transcript = ''})
-      : this.date_recorded = date_recorded ??
-            DateTime.fromMicrosecondsSinceEpoch(0, isUtc: true);
-  factory Note.fromJson(Map<String, dynamic> json) => _$NoteFromJson(json);
+      this.text_transcript = ''});
+  // factory Note.fromJson(Map<String, dynamic> json) => _$NoteFromJson(json);
+
+  factory Note.fromJson(Map<String, dynamic> json) {
+    json["date_recorded"] =
+        ((json["date_recorded"] as Timestamp).toDate().toString());
+    return _$NoteFromJson(json);
+  }
   Map<String, dynamic> toJson() => _$NoteToJson(this);
 }

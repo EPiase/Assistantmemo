@@ -3,7 +3,6 @@ from fastapi.responses import HTMLResponse
 from fastapi import UploadFile, File, Form
 from google.api_core import retry
 from models.note_model import NoteModel
-from datetime import datetime
 
 router = APIRouter(tags=["note-endpoints"])
 
@@ -55,7 +54,7 @@ async def create_note(user_id: str, file: UploadFile = File(...)):
         response = client.classify_text(request={"document": document})
         classification = str(" ".join([cat.name for cat in response.categories]))
     else:
-        classification = ""
+        classification = "/default"
 
     # access firestore
     db = firestore.Client()
@@ -100,26 +99,28 @@ async def delete_note_by_id(note_id: str, user_id: str):
         return {"delete status": f"{err}{type(err)}"}
 
 
-@router.get("/list-notes")
-async def list_all_note(user_id: str):
-    from google.cloud import firestore
+# @router.get("/list-notes")
+# async def list_all_note(user_id: str):
+#     from google.cloud import firestore
 
-    db = firestore.Client()
-    notes_ref = db.collection("users").document(user_id).collection("notes")
-    list_of_notes = {}
-    for note in notes_ref.stream():
-        list_of_notes[note.id] = note.to_dict()
-    return list_of_notes
+#     db = firestore.Client()
+#     notes_ref = db.collection("users").document(user_id).collection("notes")
+#     list_of_notes = []
+#     for note in notes_ref.stream():
+#         list_of_notes[note.id] = note.to_dict()
+#     return list_of_notes
 
 
-@router.get("/get_note_by_id")
-async def get_note_by_id(note_id: str, user_id: str):
-    from google.cloud import firestore
+# @router.get("/get_note_by_id")
+# async def get_note_by_id(note_id: str, user_id: str):
+#     from google.cloud import firestore
 
-    db = firestore.Client()
-    db = firestore.Client()
-    doc_ref = (
-        db.collection("users").document(user_id).collection("notes").document(note_id)
-    )
-    doc = doc_ref.get()
-    return doc.to_dict()
+#     db = firestore.Client()
+#     db = firestore.Client()
+#     doc_ref = (
+#         db.collection("users").document(user_id).collection("notes").document(note_id)
+#     )
+#     doc = doc_ref.get()
+#     doc = doc.to_dict()
+#     # NoteModel(**doc,note_id=note_id)
+#     return NoteModel(**doc,note_id=note_id)
