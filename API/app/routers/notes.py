@@ -64,6 +64,7 @@ async def create_note(user_id: str, file: UploadFile = File(...)):
     )
     doc_ref.set(
         {
+            "note_id": note_id,
             "audio_filename": audio_filename,
             "classification": classification,
             "date_recorded": datetime.datetime.utcnow(),
