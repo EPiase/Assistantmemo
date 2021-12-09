@@ -29,43 +29,44 @@ class FirestoreService {
   }
 }
 
-Future<String> createNoteFromPath(String path) async {
+Future<void> createNoteFromPath(String path) async {
   String UID = await AuthService().getUID();
-  FFmpegKit.executeAsync(
-      '-i $path -f flac /data/user/0/com.assistantmemo/cache/fileout.flac',
-      (session) async {
+  print("path is $path");
+  await FFmpegKit.executeAsync('-i $path -f flac $path.flac', (session) async {
     final returnCode = await session.getReturnCode();
 
     if (ReturnCode.isSuccess(returnCode)) {
       // SUCCESS
-      print(returnCode);
+      print("The return code is: $returnCode");
+      print("before");
+      print(await session.getState());
+      print("after");
+      var uri = Uri.parse(
+          'https://assistantmemo-u4oydnyd5q-uc.a.run.app/create-note/?user_id=$UID');
+      // final response = await http.get(url);
+      var request = http.MultipartRequest('PUT', uri)
+        ..files.add(await http.MultipartFile.fromPath('file', '$path.flac',
+            contentType: MediaType('audio', 'flac')));
+      var streamedResponse = await request.send();
+      var response = await http.Response.fromStream(streamedResponse);
+      if (response.statusCode == 200) {
+        // If the server did return a 200 OK response,
+        // then parse the JSON.
+        // return response.body;
+        // return 'success';
+      } else {
+        // If the server did not return a 200 OK response,
+        // then throw an exception.
+        throw Exception('Failed to load request');
+      }
     } else if (ReturnCode.isCancel(returnCode)) {
       // CANCEL
-      print(returnCode);
+      print("Cancel $returnCode");
     } else {
       // ERROR
-      print(returnCode);
+      print("Error: $returnCode");
     }
   });
-  var uri = Uri.parse(
-      'https://assistantmemo-u4oydnyd5q-uc.a.run.app/create-note/?user_id=$UID');
-  // final response = await http.get(url);
-  var request = http.MultipartRequest('PUT', uri)
-    ..files.add(await http.MultipartFile.fromPath(
-        'file', '/data/user/0/com.assistantmemo/cache/fileout.flac',
-        contentType: MediaType('audio', 'flac')));
-  var streamedResponse = await request.send();
-  var response = await http.Response.fromStream(streamedResponse);
-  if (response.statusCode == 200) {
-    // If the server did return a 200 OK response,
-    // then parse the JSON.
-    // return response.body;
-    return 'success';
-  } else {
-    // If the server did not return a 200 OK response,
-    // then throw an exception.
-    throw Exception('Failed to load request');
-  }
 }
 
 Future<String> deleteNote(String noteID) async {

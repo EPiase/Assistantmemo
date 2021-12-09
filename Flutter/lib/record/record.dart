@@ -340,6 +340,7 @@ class AudioPlayerState extends State<AudioPlayer> {
                 iconSize: 100,
                 onPressed: () {
                   createNoteFromPath(recordedAudioPath);
+                  Navigator.pushNamed(context, '/Notes');
                 },
               ),
             ),

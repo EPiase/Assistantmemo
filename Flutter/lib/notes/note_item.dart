@@ -10,7 +10,7 @@ class NoteItem extends StatelessWidget {
     return Hero(
       tag: note.audio_filename,
       child: Card(
-        color: Colors.blueGrey,
+        color: Colors.blue,
         clipBehavior: Clip.antiAlias,
         child: InkWell(
           onTap: () {
@@ -29,6 +29,7 @@ class NoteItem extends StatelessWidget {
                 child: SizedBox(
                   child: Center(
                     child: Icon(Icons.sticky_note_2,
+                        color: Colors.black,
                         size: MediaQuery.of(context).size.width * .5),
                   ),
                 ),
@@ -40,6 +41,7 @@ class NoteItem extends StatelessWidget {
                     note.text_transcript,
                     style: const TextStyle(
                       height: 1.5,
+                      fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
                     overflow: TextOverflow.fade,
