@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:ffmpeg_kit_flutter/return_code.dart';
 import 'package:http/http.dart' as http;
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -101,4 +102,13 @@ Future<String> starNote(String noteID, bool starStatus) async {
     // then throw an exception.
     throw Exception('Failed to load request');
   }
+}
+
+Future<String> downloadRecording(String sblob) async {
+  final request = await HttpClient().getUrl(Uri.parse(
+      'https://assistantmemo-u4oydnyd5q-uc.a.run.app/download_file?bucket=fire-assistantmemo-recordings&sblob=$sblob'));
+  final response = await request.close();
+  await response
+      .pipe(File('/data/user/0/com.assistantmemo/cache/$sblob').openWrite());
+  return '/data/user/0/com.assistantmemo/cache/$sblob';
 }

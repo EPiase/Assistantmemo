@@ -3,6 +3,7 @@ from fastapi import responses
 from fastapi.responses import HTMLResponse
 from fastapi import UploadFile, File, Form
 from fastapi.responses import FileResponse
+from starlette.responses import StreamingResponse
 
 # from google.api_core import retry
 from routers import notes
@@ -17,15 +18,14 @@ async def root():
     return res.read()
 
 
-@app.get("/download_file")
-async def download_file(bucket: str, sblob: str):
+@app.get("/download_recording", response_class=StreamingResponse)
+async def download_recording(sblob: str):
     from google.cloud import storage
-    from starlette.responses import StreamingResponse
     import io
 
     storage_client = storage.Client()
     # get bucket with name
-    bucket = storage_client.get_bucket(bucket)
+    bucket = storage_client.get_bucket('fire-assistantmemo-recordings')
     # get bucket data as blob
     blob = bucket.get_blob(sblob)
 

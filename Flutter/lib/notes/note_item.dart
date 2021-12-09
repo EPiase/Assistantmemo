@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:assistantmemo/services/serverAPI.dart';
 import 'package:flutter/material.dart';
 import 'package:assistantmemo/services/models.dart';
 import 'package:just_audio/just_audio.dart' as ap;
@@ -68,6 +69,7 @@ class NoteScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // final path = downloadRecording(note.audio_filename);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue,
@@ -81,11 +83,41 @@ class NoteScreen extends StatelessWidget {
           style: const TextStyle(
               height: 2, fontSize: 20, fontWeight: FontWeight.bold),
         ),
-        AudioPlayer(
-          source: ap.AudioSource.uri(Uri.parse(path)),
-          onDelete: () {},
+        ReadyPlayer(
+          note: note,
         )
       ]),
+    );
+  }
+}
+
+class ReadyPlayer extends StatelessWidget {
+  const ReadyPlayer({
+    Key? key,
+    required this.note,
+  }) : super(key: key);
+
+  final Note note;
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: downloadRecording(note.audio_filename),
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return Text(snapshot.error.toString());
+        } else if (snapshot.hasData) {
+          String path = snapshot.data!.toString();
+          return AudioPlayer(
+            source: ap.AudioSource.uri(Uri.parse(path)),
+            onDelete: () {},
+          );
+        } else if (snapshot.connectionState == ConnectionState.waiting) {
+          return Text('loading', textDirection: TextDirection.ltr);
+        } else {
+          return Text(
+              "Really strange error, there might be missing data in DB");
+        }
+      },
     );
   }
 }
