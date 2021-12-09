@@ -88,9 +88,22 @@ async def star_note_by_id(note_id: str, user_id: str, star_status: bool):
 @router.delete("/delete-note")
 async def delete_note_by_id(note_id: str, user_id: str):
     from google.cloud import firestore
-    # TODO update how the system checks success or fail. 
-    # Does not seem to be working right.
+    from google.cloud import storage
     db = firestore.Client()
+    doc_ref = (
+        db.collection("users").document(user_id).collection("notes").document(note_id)
+    )
+    doc = doc_ref.get()
+    doc = doc.to_dict()
+
+
+    storage_client = storage.Client()
+    # get bucket with name
+    bucket = storage_client.get_bucket('fire-assistantmemo-recordings')
+    # get bucket data as blob
+    blob = bucket.get_blob(doc['audio_filename'])
+    blob.delete()
+
     try:
         return db.collection("users").document(user_id).collection("notes").document(
             note_id
