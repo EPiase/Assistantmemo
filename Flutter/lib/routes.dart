@@ -8,7 +8,6 @@ var appRoutes = {
   '/': (context) => const HomeScreen(),
   '/login': (context) => const LoginScreen(),
   '/Record': (context) => RecordingSlide(),
-  // '/Record': (context) => const AudioRecorder(),
   '/Notes': (context) => const NotesScreen(),
   '/Profile': (context) => const ProfileScreen(),
 };

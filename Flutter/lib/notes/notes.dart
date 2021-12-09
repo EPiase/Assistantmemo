@@ -20,7 +20,7 @@ class NotesScreen extends StatelessWidget {
           var notes = snapshot.data!;
           return ListOfNotes(notes: notes);
         } else if (snapshot.connectionState == ConnectionState.waiting) {
-          return Text('loading', textDirection: TextDirection.ltr);
+          return Text('Loading', textDirection: TextDirection.ltr);
         } else {
           return Text(
               "Really strange error, there might be missing data in DB");
@@ -42,7 +42,7 @@ class ListOfNotes extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('notes'),
+        title: const Text('Notes'),
       ),
       body: GridView.count(
         primary: false,

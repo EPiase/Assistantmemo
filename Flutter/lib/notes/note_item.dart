@@ -4,6 +4,7 @@ import 'package:assistantmemo/services/serverAPI.dart';
 import 'package:flutter/material.dart';
 import 'package:assistantmemo/services/models.dart';
 import 'package:just_audio/just_audio.dart' as ap;
+import 'package:favorite_button/favorite_button.dart';
 
 class NoteItem extends StatelessWidget {
   final Note note;
@@ -28,15 +29,28 @@ class NoteItem extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Flexible(
-                flex: 3,
-                child: SizedBox(
-                  child: Center(
-                    child: Icon(Icons.sticky_note_2,
-                        color: Colors.black,
-                        size: MediaQuery.of(context).size.width * .5),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    child: SizedBox(
+                      child: Center(
+                        child: Icon(Icons.sticky_note_2,
+                            color: Colors.black, size: 60),
+                      ),
+                    ),
                   ),
-                ),
+                  StarButton(
+                    isStarred: false,
+                    iconSize: 75.0,
+                    // iconDisabledColor: Colors.white,
+                    valueChanged: (_isFavorite) {
+                      starNote(note.note_id, _isFavorite);
+                      // print('Is Favorite : $_isFavorite');
+                    },
+                  ),
+                ],
               ),
               Flexible(
                 child: Padding(
@@ -53,7 +67,6 @@ class NoteItem extends StatelessWidget {
                   ),
                 ),
               ),
-              // Flexible(child: NoteProgress(note: note)),
             ],
           ),
         ),
@@ -72,12 +85,28 @@ class NoteScreen extends StatelessWidget {
     // final path = downloadRecording(note.audio_filename);
     return Scaffold(
       appBar: AppBar(
+        title: Text('Note'),
         backgroundColor: Colors.blue,
       ),
       body: ListView(children: [
-        Hero(
-            tag: note.classification,
-            child: Icon(Icons.sticky_note_2, size: 75)),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Hero(
+                tag: note.classification,
+                child: Icon(Icons.sticky_note_2, size: 75)),
+            StarButton(
+              isStarred: false,
+              iconSize: 75.0,
+              // iconDisabledColor: Colors.white,
+              valueChanged: (_isFavorite) {
+                starNote(note.note_id, _isFavorite);
+                // print('Is Favorite : $_isFavorite');
+              },
+            ),
+          ],
+        ),
         Text(
           note.text_transcript,
           style: const TextStyle(
