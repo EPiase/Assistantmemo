@@ -344,7 +344,7 @@ class AudioPlayerState extends State<AudioPlayer> {
                 },
               ),
             ),
-            Text(recordedAudioPath),
+            // Text(recordedAudioPath),
           ],
         );
       },

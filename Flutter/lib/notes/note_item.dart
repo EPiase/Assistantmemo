@@ -43,6 +43,7 @@ class NoteItem extends StatelessWidget {
                       ),
                     ),
                   ),
+                  Text(note.classification),
                   StarButton(
                     isStarred: note.is_starred,
                     iconSize: 75.0,
@@ -96,6 +97,7 @@ class NoteScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Hero(tag: note.note_id, child: Icon(Icons.sticky_note_2, size: 75)),
+            Text(note.classification),
             StarButton(
               isStarred: note.is_starred,
               iconSize: 75.0,
@@ -136,7 +138,7 @@ class Categories extends StatelessWidget {
         TextField(
           decoration: InputDecoration(
             border: OutlineInputBorder(),
-            hintText: 'Assign Category to Note',
+            hintText: note.classification,
           ),
           controller: myController,
         ),
