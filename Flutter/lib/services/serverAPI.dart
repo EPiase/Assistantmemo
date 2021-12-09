@@ -28,6 +28,12 @@ class FirestoreService {
     var snapshot = await ref.get();
     return Note.fromJson(snapshot.data() ?? {});
   }
+
+  updateClassification(String noteID, String newClass) async {
+    String UID = await AuthService().getUID();
+    var ref = _db.collection('users').doc(UID).collection('notes').doc(noteID);
+    ref.update({'classification': '$newClass'});
+  }
 }
 
 Future<void> createNoteFromPath(String path) async {
