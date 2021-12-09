@@ -28,6 +28,12 @@ class FirestoreService {
     var snapshot = await ref.get();
     return Note.fromJson(snapshot.data() ?? {});
   }
+
+  updateClassification(String noteID, String newClass) async {
+    String UID = await AuthService().getUID();
+    var ref = _db.collection('users').doc(UID).collection('notes').doc(noteID);
+    ref.update({'classification': '$newClass'});
+  }
 }
 
 Future<void> createNoteFromPath(String path) async {
@@ -70,7 +76,7 @@ Future<void> createNoteFromPath(String path) async {
   });
 }
 
-Future<String> deleteNote(String noteID) async {
+deleteNote(String noteID) async {
   String UID = await AuthService().getUID();
   var url = Uri.parse(
       'https://assistantmemo-u4oydnyd5q-uc.a.run.app/delete-note?user_id=$UID&note_id=$noteID');
@@ -79,7 +85,7 @@ Future<String> deleteNote(String noteID) async {
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response,
     // then parse the JSON.
-    return response.body;
+    // return response.body;
   } else {
     // If the server did not return a 200 OK response,
     // then throw an exception.
