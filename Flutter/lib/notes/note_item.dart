@@ -138,12 +138,15 @@ class Categories extends StatelessWidget {
             border: OutlineInputBorder(),
             hintText: 'Assign Category to Note',
           ),
-        controller: myController,
+          controller: myController,
         ),
         Center(
           child: OutlinedButton(
             child: Text("Add Category"),
-            onPressed: () {},
+            onPressed: () {
+              FirestoreService()
+                  .updateClassification(note.note_id, (myController.text));
+            },
           ),
         )
       ],
