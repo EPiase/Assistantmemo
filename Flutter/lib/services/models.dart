@@ -12,7 +12,7 @@ class Note {
 
   Note(this.date_recorded,
       {this.audio_filename = '',
-      this.classification = '',
+      this.classification = 'Short Note',
       this.is_starred = false,
       this.text_transcript = ''});
   // factory Note.fromJson(Map<String, dynamic> json) => _$NoteFromJson(json);

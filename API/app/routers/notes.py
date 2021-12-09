@@ -54,7 +54,7 @@ async def create_note(user_id: str, file: UploadFile = File(...)):
         response = client.classify_text(request={"document": document})
         classification = str(" ".join([cat.name for cat in response.categories]))
     else:
-        classification = ""
+        classification = "/default"
 
     # access firestore
     db = firestore.Client()

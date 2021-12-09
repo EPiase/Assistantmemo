@@ -2,6 +2,7 @@ import 'package:assistantmemo/services/models.dart';
 import 'package:flutter/material.dart';
 import 'package:assistantmemo/shared/BottomNavBar.dart';
 import 'package:assistantmemo/services/serverAPI.dart';
+import 'package:assistantmemo/notes/note_item.dart';
 
 class NotesScreen extends StatelessWidget {
   const NotesScreen({Key? key}) : super(key: key);
@@ -49,7 +50,7 @@ class ListOfNotes extends StatelessWidget {
         crossAxisCount: 1,
         crossAxisSpacing: 1,
         mainAxisSpacing: 100,
-        children: notes.map((note) => Text(note.text_transcript)).toList(),
+        children: notes.map((note) => NoteItem(note: note)).toList(),
       ),
       bottomNavigationBar: BottomNavBar(),
     );
