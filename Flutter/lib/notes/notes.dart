@@ -47,9 +47,10 @@ class ListOfNotes extends StatelessWidget {
       body: GridView.count(
         primary: false,
         padding: const EdgeInsets.all(20.0),
+        childAspectRatio: 3,
         crossAxisCount: 1,
         crossAxisSpacing: 1,
-        mainAxisSpacing: 100,
+        mainAxisSpacing: 20,
         children: notes.map((note) => NoteItem(note: note)).toList(),
       ),
       bottomNavigationBar: BottomNavBar(),

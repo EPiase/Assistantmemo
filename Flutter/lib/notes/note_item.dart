@@ -13,7 +13,7 @@ class NoteItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Hero(
-      tag: note.audio_filename,
+      tag: note.note_id,
       child: Card(
         color: Colors.blue,
         clipBehavior: Clip.antiAlias,
@@ -28,6 +28,7 @@ class NoteItem extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisSize: MainAxisSize.min,
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -93,9 +94,7 @@ class NoteScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Hero(
-                tag: note.classification,
-                child: Icon(Icons.sticky_note_2, size: 75)),
+            Hero(tag: note.note_id, child: Icon(Icons.sticky_note_2, size: 75)),
             StarButton(
               isStarred: false,
               iconSize: 75.0,
