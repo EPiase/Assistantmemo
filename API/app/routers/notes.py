@@ -7,28 +7,6 @@ from models.note_model import NoteModel
 router = APIRouter(tags=["note-endpoints"])
 
 
-@router.get("/", response_class=HTMLResponse)
-async def root():
-    res = open("landing_page.html")
-    return res.read()
-
-
-@router.get("/download_recording", response_class=StreamingResponse)
-async def download_recording(sblob: str):
-    from google.cloud import storage
-    import io
-
-    storage_client = storage.Client()
-    # get bucket with name
-    bucket = storage_client.get_bucket('fire-assistantmemo-recordings')
-    # get bucket data as blob
-    blob = bucket.get_blob(sblob)
-
-    return StreamingResponse(
-        io.BytesIO(blob.download_as_bytes()), media_type="audio/flac"
-    )
-
-
 @router.put("/create-note/")
 async def create_note(user_id: str, file: UploadFile = File(...)):
     from google.cloud import storage
@@ -133,4 +111,5 @@ async def delete_note_by_id(note_id: str, user_id: str):
         return {"delete status": "success"}
     except BaseException as err:
         return {"delete status": f"{err}{type(err)}"}
+
 

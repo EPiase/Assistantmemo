@@ -18,15 +18,12 @@ class LoginScreen extends StatelessWidget {
             const FlutterLogo(
               size: 150,
             ),
-            // Guest signin
-            // Flexible(
-            //   child: LoginButton(
-            //     icon: FontAwesomeIcons.userNinja,
-            //     text: 'Continue as Guest',
-            //     loginMethod: AuthService().anonLogin,
-            //     color: Colors.deepPurple,
-            //   ),
-            // ),
+            Center(child: Text("Welcome to Assistant Memo")),
+            Center(
+                child:
+                    Text("Alessandro Ciccolella\nEric Piasentin\nVraj Patel")),
+            // Center(child: Text("Eric Piasentin")),
+            // Center(child: Text("Vraj Patel")),
             LoginButton(
               text: 'Sign in with Google',
               icon: FontAwesomeIcons.google,
