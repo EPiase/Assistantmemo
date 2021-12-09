@@ -43,7 +43,7 @@ class NoteItem extends StatelessWidget {
                     iconSize: 75.0,
                     // iconDisabledColor: Colors.white,
                     valueChanged: (_isFavorite) {
-                      // starNote(note.is_starred, _isFavorite);
+                      starNote(note.note_id, _isFavorite);
                       // print('Is Favorite : $_isFavorite');
                     },
                   ),
@@ -97,7 +97,7 @@ class NoteScreen extends StatelessWidget {
               iconSize: 75.0,
               // iconDisabledColor: Colors.white,
               valueChanged: (_isFavorite) {
-                // starNote(note.is_starred, _isFavorite);
+                starNote(note.note_id, _isFavorite);
                 // print('Is Favorite : $_isFavorite');
               },
             ),
