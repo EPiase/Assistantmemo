@@ -106,7 +106,7 @@ Future<String> starNote(String noteID, bool starStatus) async {
 
 Future<String> downloadRecording(String sblob) async {
   final request = await HttpClient().getUrl(Uri.parse(
-      'https://assistantmemo-u4oydnyd5q-uc.a.run.app/download_file?sblob=$sblob'));
+      'https://assistantmemo-u4oydnyd5q-uc.a.run.app/download_recording?sblob=$sblob'));
   final response = await request.close();
   await response
       .pipe(File('/data/user/0/com.assistantmemo/cache/$sblob').openWrite());
