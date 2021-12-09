@@ -43,7 +43,7 @@ class NoteItem extends StatelessWidget {
                     ),
                   ),
                   StarButton(
-                    isStarred: false,
+                    isStarred: note.is_starred,
                     iconSize: 75.0,
                     // iconDisabledColor: Colors.white,
                     valueChanged: (_isFavorite) {
@@ -96,7 +96,7 @@ class NoteScreen extends StatelessWidget {
           children: [
             Hero(tag: note.note_id, child: Icon(Icons.sticky_note_2, size: 75)),
             StarButton(
-              isStarred: false,
+              isStarred: note.is_starred,
               iconSize: 75.0,
               // iconDisabledColor: Colors.white,
               valueChanged: (_isFavorite) {
@@ -136,6 +136,7 @@ class ReadyPlayer extends StatelessWidget {
         } else if (snapshot.hasData) {
           String path = snapshot.data!.toString();
           return AudioPlayer(
+            note: note,
             source: ap.AudioSource.uri(Uri.parse(path)),
             onDelete: () {},
           );
@@ -153,15 +154,14 @@ class ReadyPlayer extends StatelessWidget {
 class AudioPlayer extends StatefulWidget {
   /// Path from where to play recorded audio
   final ap.AudioSource source;
+  final note;
 
   /// Callback when audio file should be removed
   /// Setting this to null hides the delete button
   final VoidCallback onDelete;
 
-  const AudioPlayer({
-    required this.source,
-    required this.onDelete,
-  });
+  const AudioPlayer(
+      {required this.source, required this.onDelete, required this.note});
 
   @override
   AudioPlayerState createState() => AudioPlayerState();
@@ -219,7 +219,10 @@ class AudioPlayerState extends State<AudioPlayer> {
               icon: Icon(Icons.delete,
                   color: const Color(0xFF73748D), size: _deleteBtnSize),
               onPressed: () {
-                _audioPlayer.stop().then((value) => widget.onDelete());
+                _audioPlayer.stop();
+                deleteNote(widget.note.note_id);
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                    '/Notes', (Route<dynamic> route) => false);
               },
             ),
           ],

@@ -30,7 +30,7 @@ class NotesScreen extends StatelessWidget {
   }
 }
 
-class ListOfNotes extends StatelessWidget {
+class ListOfNotes extends StatefulWidget {
   const ListOfNotes({
     Key? key,
     required this.notes,
@@ -38,6 +38,11 @@ class ListOfNotes extends StatelessWidget {
 
   final List<Note> notes;
 
+  @override
+  State<ListOfNotes> createState() => _ListOfNotesState();
+}
+
+class _ListOfNotesState extends State<ListOfNotes> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,7 +56,7 @@ class ListOfNotes extends StatelessWidget {
         crossAxisCount: 1,
         crossAxisSpacing: 1,
         mainAxisSpacing: 20,
-        children: notes.map((note) => NoteItem(note: note)).toList(),
+        children: widget.notes.map((note) => NoteItem(note: note)).toList(),
       ),
       bottomNavigationBar: BottomNavBar(),
     );
