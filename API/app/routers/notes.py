@@ -7,6 +7,28 @@ from models.note_model import NoteModel
 router = APIRouter(tags=["note-endpoints"])
 
 
+@router.get("/", response_class=HTMLResponse)
+async def root():
+    res = open("landing_page.html")
+    return res.read()
+
+
+@router.get("/download_recording", response_class=StreamingResponse)
+async def download_recording(sblob: str):
+    from google.cloud import storage
+    import io
+
+    storage_client = storage.Client()
+    # get bucket with name
+    bucket = storage_client.get_bucket('fire-assistantmemo-recordings')
+    # get bucket data as blob
+    blob = bucket.get_blob(sblob)
+
+    return StreamingResponse(
+        io.BytesIO(blob.download_as_bytes()), media_type="audio/flac"
+    )
+
+
 @router.put("/create-note/")
 async def create_note(user_id: str, file: UploadFile = File(...)):
     from google.cloud import storage
@@ -112,29 +134,3 @@ async def delete_note_by_id(note_id: str, user_id: str):
     except BaseException as err:
         return {"delete status": f"{err}{type(err)}"}
 
-
-# @router.get("/list-notes")
-# async def list_all_note(user_id: str):
-#     from google.cloud import firestore
-
-#     db = firestore.Client()
-#     notes_ref = db.collection("users").document(user_id).collection("notes")
-#     list_of_notes = []
-#     for note in notes_ref.stream():
-#         list_of_notes[note.id] = note.to_dict()
-#     return list_of_notes
-
-
-# @router.get("/get_note_by_id")
-# async def get_note_by_id(note_id: str, user_id: str):
-#     from google.cloud import firestore
-
-#     db = firestore.Client()
-#     db = firestore.Client()
-#     doc_ref = (
-#         db.collection("users").document(user_id).collection("notes").document(note_id)
-#     )
-#     doc = doc_ref.get()
-#     doc = doc.to_dict()
-#     # NoteModel(**doc,note_id=note_id)
-#     return NoteModel(**doc,note_id=note_id)

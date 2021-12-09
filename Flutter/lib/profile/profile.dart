@@ -9,6 +9,14 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final appUser = AuthService().user;
+    var email;
+    var photoURL;
+    var displayName;
+    if (appUser != null) {
+      photoURL = appUser.photoURL;
+      email = appUser.email;
+      displayName = appUser.displayName;
+    }
     return Scaffold(
       appBar: AppBar(
         title: Text('Profile'),
@@ -16,7 +24,9 @@ class ProfileScreen extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text('Tomate'),
+          Text("Welcome $displayName"),
+          Image.network(photoURL),
+          Text(email),
           // displayUserInfo(appUser),
           Center(
             child: ElevatedButton(
