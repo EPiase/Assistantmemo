@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, encoders
 from fastapi.responses import HTMLResponse
 from fastapi import UploadFile, File, Form
 from google.api_core import retry
@@ -36,7 +36,12 @@ async def create_note(user_id: str, file: UploadFile = File(...)):
     client = speech.SpeechClient()
     gcs_uri = f"gs://fire-assistantmemo-recordings/{audio_filename}"
     audio = speech.RecognitionAudio(uri=gcs_uri)
-    config = speech.RecognitionConfig(language_code="en-US")
+    config = speech.RecognitionConfig(
+        encoding=speech.RecognitionConfig.AudioEncoding.AMR_WB,
+        sample_rate_hertz=16000,
+        language_code="en-US",
+    )
+
     operation = client.long_running_recognize(config=config, audio=audio)
     response = operation.result(timeout=90)
     Transcript = []

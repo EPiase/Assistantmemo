@@ -2,6 +2,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart' as ap;
 import 'package:record/record.dart';
+import 'package:assistantmemo/services/serverAPI.dart';
+
+String recordedAudioPath = '';
 
 class RecordScreen extends StatefulWidget {
   // const RecordScreen({Key? key}) : super(key: key);
@@ -18,6 +21,7 @@ class _RecordScreenState extends State<RecordScreen> {
   bool _isRecording = false;
   bool _isPaused = false;
   int _recordDuration = 0;
+  String path = '';
   Timer? _timer;
   Timer? _ampTimer;
   // final _audioRecorder = RecordScreen();
@@ -150,7 +154,9 @@ class _RecordScreenState extends State<RecordScreen> {
   Future<void> _start() async {
     try {
       if (await _audioRecorder.hasPermission()) {
-        await _audioRecorder.start();
+        await _audioRecorder.start(
+          encoder: AudioEncoder.AMR_WB,
+        );
 
         bool isRecording = await _audioRecorder.isRecording();
         setState(() {
@@ -169,7 +175,6 @@ class _RecordScreenState extends State<RecordScreen> {
     _timer?.cancel();
     _ampTimer?.cancel();
     final path = await _audioRecorder.stop();
-
     widget.onStop(path!);
 
     setState(() => _isRecording = false);
@@ -247,6 +252,7 @@ class _RecordingSlideState extends State<RecordingSlide> {
                   setState(() {
                     audioSource = ap.AudioSource.uri(Uri.parse(path));
                     showPlayer = true;
+                    recordedAudioPath = path;
                   });
                 },
               ),
@@ -331,9 +337,12 @@ class AudioPlayerState extends State<AudioPlayer> {
               child: IconButton(
                 icon: Icon(Icons.upload, color: const Color(0xFF73748D)),
                 iconSize: 100,
-                onPressed: () {},
+                onPressed: () {
+                  createNoteFromPath(recordedAudioPath);
+                },
               ),
             ),
+            Text(recordedAudioPath),
           ],
         );
       },
