@@ -1,9 +1,11 @@
 import 'dart:async';
+import 'package:ffmpeg_kit_flutter/return_code.dart';
 import 'package:http/http.dart' as http;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:assistantmemo/services/models.dart';
 import 'package:assistantmemo/services/auth.dart';
+import 'package:ffmpeg_kit_flutter/ffmpeg_kit.dart';
 
 class FirestoreService {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
@@ -29,11 +31,28 @@ class FirestoreService {
 
 Future<String> createNoteFromPath(String path) async {
   String UID = await AuthService().getUID();
+  FFmpegKit.executeAsync(
+      '-i $path -f flac /data/user/0/com.assistantmemo/cache/fileout.flac',
+      (session) async {
+    final returnCode = await session.getReturnCode();
+
+    if (ReturnCode.isSuccess(returnCode)) {
+      // SUCCESS
+      print(returnCode);
+    } else if (ReturnCode.isCancel(returnCode)) {
+      // CANCEL
+      print(returnCode);
+    } else {
+      // ERROR
+      print(returnCode);
+    }
+  });
   var uri = Uri.parse(
       'https://assistantmemo-u4oydnyd5q-uc.a.run.app/create-note/?user_id=$UID');
   // final response = await http.get(url);
   var request = http.MultipartRequest('PUT', uri)
-    ..files.add(await http.MultipartFile.fromPath('file', path,
+    ..files.add(await http.MultipartFile.fromPath(
+        'file', '/data/user/0/com.assistantmemo/cache/fileout.flac',
         contentType: MediaType('audio', 'flac')));
   var streamedResponse = await request.send();
   var response = await http.Response.fromStream(streamedResponse);

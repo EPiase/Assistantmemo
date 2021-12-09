@@ -155,6 +155,7 @@ class _RecordScreenState extends State<RecordScreen> {
     try {
       if (await _audioRecorder.hasPermission()) {
         await _audioRecorder.start(
+          // path: '/data/user/0/com.assistantmemo/cache/newpath.3gp',
           encoder: AudioEncoder.AMR_WB,
         );
 
