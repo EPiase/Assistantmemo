@@ -1,5 +1,9 @@
 # Assistant Memo
 CEN-5035
 
-Flutter App that allows the user to record audio files save them to a database have the audios transcribed and displayed back to the user. 
-Users can star a note, add or update a category for the note, have a playback of the audio of the specific note, and delete the note.
+![Report Page 1](/assets/images/report1.png)
+![Report Page 2](/assets/images/report2.png)
+![Report Page 3](/assets/images/report3.png)
+![Report Page 4](/assets/images/report4.png)
+![Report Page 5](/assets/images/report5.png)
+![Report Page 6](/assets/images/report6.png)
